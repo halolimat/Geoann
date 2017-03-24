@@ -34,12 +34,12 @@ text {
   margin-left: auto;
   margin-right: auto;
   width: 30em;
-  font-size: 12px;
+  font-size: 25px;
   font-family: 'Liberation Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 .center_wrapper > div > div h1 {
   text-align: center;
-  font-size: 14px;
+  font-size: 25px;
 }
 #no_svg_wrapper {
   display: none;
@@ -58,7 +58,7 @@ svg.reselect {
 
 /* "basic" font */
 text {
-  font-size: 13px;
+  font-size: 25px;
   font-family: 'Liberation Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -75,7 +75,7 @@ path {
 /* "basic" font */
 .span text {
   /*  font-size: 10.5px; */
-  font-size: 10px;
+  font-size: 25px;
   text-anchor: middle;
   font-family: 'PT Sans Caption', sans-serif;
   pointer-events: none;
@@ -83,16 +83,16 @@ path {
 
 /* this should likely match span font */
 .span_type_label {
-  font-size: 11px;
+  font-size: 25px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 /* this should likely match arc font */
 .arc_type_label {
-  font-size: 11px;
+  font-size: 25px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 .attribute_type_label .ui-button-text {
-  font-size: 11px;
+  font-size: 25px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 
@@ -275,7 +275,7 @@ rect.shadow_EditHighlight {
 }
 
 .arcs text {
-  font-size: 9px;
+  font-size: 25px;
   text-anchor: middle;
   font-family: 'PT Sans Caption', sans-serif;
   /* dominant-baseline: central; */
