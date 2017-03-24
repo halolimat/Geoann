@@ -9,7 +9,7 @@ head.js(
     bratLocation + '/client/src/configuration.js',
     bratLocation + '/client/src/util.js',
     bratLocation + '/client/src/annotation_log.js',
-    bratLocation + '/client/lib/webfont.js',
+    //bratLocation + '/client/lib/webfont.js',
 
     // brat modules
     bratLocation + '/client/src/dispatcher.js',
@@ -17,8 +17,8 @@ head.js(
     bratLocation + '/client/src/visualizer.js'
 );
 
-var webFontURLs = [
-    bratLocation + '/static/fonts/Astloch-Bold.ttf',
-    bratLocation + '/static/fonts/PT_Sans-Caption-Web-Regular.ttf',
-    bratLocation + '/static/fonts/Liberation_Sans-Regular.ttf'
-];
+//var webFontURLs = [
+//    bratLocation + '/static/fonts/Astloch-Bold.ttf',
+//    bratLocation + '/static/fonts/PT_Sans-Caption-Web-Regular.ttf',
+//    bratLocation + '/static/fonts/Liberation_Sans-Regular.ttf'
+//];
