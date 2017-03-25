@@ -1,0 +1,5 @@
+T1	Imp-Top 45 56	South India
+T2	Toponym 102 109	Chennai
+T3	Toponym 117 124	Chennai
+T4	Imp-Top 28 41	coastal areas
+R1	Dependency Arg1:T4 Arg2:T1	

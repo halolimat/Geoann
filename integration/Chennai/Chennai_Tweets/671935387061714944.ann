@@ -1,0 +1,3 @@
+T1	Imp-Top 68 80	US consulate
+T2	Toponym 84 91	Chennai
+R1	Dependency Arg1:T1 Arg2:T2	

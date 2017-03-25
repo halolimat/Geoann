@@ -11,11 +11,10 @@ license: http://tympanus.net/codrops/licensing/-->
 		<meta name="description" content="Fullscreen Pageflip Layout with BookBlock" />
 		<meta name="keywords" content="fullscreen pageflip, booklet, layout, bookblock, jquery plugin, flipboard layout, sidebar menu" />
 		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.custom.css" />
-		<link rel="stylesheet" type="text/css" href="css/bookblock.css" />
-		<link rel="stylesheet" type="text/css" href="css/custom.css" />
-		<script src="js/modernizr.custom.79639.js"></script>
+		<link rel="stylesheet" type="text/css" href="static/css/jquery.jscrollpane.custom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/bookblock.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/custom.css" />
+		<script src="static/js/modernizr.custom.79639.js"></script>
 	</head>
 	<body>
 
@@ -23,48 +22,6 @@ license: http://tympanus.net/codrops/licensing/-->
 
 			<div class="menu-panel">
 				<h3>Table of Contents</h3>
-
-
-
-				
-
-
-
-
-
-
-
-
-
-
-
-				<input id="selectedFile" name="files[]" accept=".txt" type="file" style="position:absolute;visibility:hidden;"/>
-				<input type="button" id="browseButton" value="Select a tweet" onclick="selectedFile.click()">
-
-				<!-- Here we would open the file dialog to read the tweets
-				<input type="file"  name="files[]" accept=".txt" multiple /> -->
-				<output id="list"></output>
-
-				<script>
-				  function handleFileSelect(evt) {
-				    var files = evt.target.files; // FileList object
-
-				    // files is a FileList of File objects. List some properties.
-				    var output = [];
-				    for (var i = 0, f; f = files[i]; i++) {
-				      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-				                  f.size, ' bytes, last modified: ',
-				                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-				                  '</li>');
-				    }
-				    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-				  }
-
-				  document.getElementById('selectedFile').addEventListener('change', handleFileSelect, false);
-				</script>
-
-
-
 
 				<ul id="menu-toc" class="menu-toc">
 					<li class="menu-toc-current"><a href="#item1">Self-destruction</a></li>
@@ -155,11 +112,11 @@ license: http://tympanus.net/codrops/licensing/-->
 
 		</div><!-- /container -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="js/jquery.mousewheel.js"></script>
-		<script src="js/jquery.jscrollpane.min.js"></script>
-		<script src="js/jquerypp.custom.js"></script>
-		<script src="js/jquery.bookblock.js"></script>
-		<script src="js/page.js"></script>
+		<script src="static/js/jquery.mousewheel.js"></script>
+		<script src="static/js/jquery.jscrollpane.min.js"></script>
+		<script src="static/js/jquerypp.custom.js"></script>
+		<script src="static/js/jquery.bookblock.js"></script>
+		<script src="static/js/page.js"></script>
 		<script>
 			$(function() {
 

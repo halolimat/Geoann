@@ -1,0 +1,9 @@
+T1	Imp-Top 61 85	Vivekananda Nagar Street
+T2	Toponym 87 96	Nesapakkm
+T3	Toponym 98 105	Chennai
+R1	Dependency Arg1:T1 Arg2:T2	
+R2	Dependency Arg1:T2 Arg2:T3	
+T4	Imp-Top 50 52	54
+T5	Imp-Top 57 59	58
+R3	Dependency Arg1:T4 Arg2:T1	
+R4	Dependency Arg1:T5 Arg2:T1	

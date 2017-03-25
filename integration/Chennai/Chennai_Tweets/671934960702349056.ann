@@ -1,0 +1,5 @@
+T1	Toponym 58 62	CMBT
+T2	Toponym 64 78	Chinmaya Nagar
+R1	Dependency Arg1:T1 Arg2:T2	
+T3	Toponym 177 184	Chennai
+T4	Toponym 201 208	Chennai
