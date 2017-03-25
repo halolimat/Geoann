@@ -70,80 +70,14 @@ def page_flips():
             <h3>List of Tweets</h3>
 
             <ul id="menu-toc" class="menu-toc">
-                <li><a href="#item1">Self-destruction</a></li>
-                <li><a href="#item2">Why we die</a></li>
-                <li><a href="#item3">The honeymoon</a></li>
-                <li><a href="#item4">A drawing joke</a></li>
-                <li><a href="#item5">Commencing practice</a></li>
+                {{!menu_items}}
             </ul>
 
         </div>
 
         <div class="bb-custom-wrapper">
             <div id="bb-bookblock" class="bb-bookblock">
-                <div class="bb-item" id="item1">
-                    <div class="content">
-                        <div class="scroller">
-                            <h2>Self-destruction</h2>
-                            <p>In New London, report says, the young men are falling into drinking habits
-                            as never before. So in New Haven, Bridgeport, and the other cities and
-                            large places of the state.</p>
-
-                            <p><em>From <a href="http://www.gutenberg.org/ebooks/41595" target="_blank">"The Funny Side of Physic"</a> by A. D. Crabtre</em></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bb-item" id="item2">
-                    <div class="content">
-                        <div class="scroller">
-                            <h2>Why we die</h2>
-                            <p>But few of the human race die of old age. Besides the thousand and one
-                            diseases flesh is heir to, and the disease which Mrs. O'Flannagan said her
-                            husband died of, viz., "Of a Saturday 'tis that poor Mike died," very many
-                            die of disappointment. More _fret_ out. Mr. Beecher said, "It is the
-                            fretting that wears out the machinery; friction, not the real wear."</p>
-
-                            <p><em>From <a href="http://www.gutenberg.org/ebooks/41595" target="_blank">"The Funny Side of Physic"</a> by A. D. Crabtre</em></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bb-item" id="item3">
-                    <div class="content">
-                        <div class="scroller">
-                            <h2>The honeymoon</h2>
-                            <p>The origin of the honeymoon is not generally known.</p>
-
-                            <p><em>From <a href="http://www.gutenberg.org/ebooks/41595" target="_blank">"The Funny Side of Physic"</a> by A. D. Crabtre</em></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bb-item" id="item4">
-                    <div class="content">
-                        <div class="scroller">
-                            <h2>A drawing joke</h2>
-                            <p>Several kings and great lords are made mention of as being particularly
-                            fond of using the lancet. Peter the Great of Russia was remarkably fond of
-                            witnessing dissections and surgical operations. He even used to carry a
-                            case of instruments in his pocket. He often visited the hospitals to
-                            witness capital operations, at times assisting in person, and was able to
-                            dissect properly, to bleed a patient, and extract a tooth as well as one
-                            of the faculty.</p>
-
-                            <p><em>From <a href="http://www.gutenberg.org/ebooks/41595" target="_blank">"The Funny Side of Physic"</a> by A. D. Crabtre</em></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bb-item" id="item5">
-                    <div class="content">
-                        <div class="scroller">
-                            <h2>Commencing practice</h2>
-                            <p>From that excellent work, "Scenes in the Practice of a New York Surgeon,"
-                            by Dr. E. H. Dixon, I copy, with some abbreviation, the following, which</p>
-
-                            <p><em>From <a href="http://www.gutenberg.org/ebooks/41595" target="_blank">"The Funny Side of Physic"</a> by A. D. Crabtre</em></p>
-                        </div>
-                    </div>
-                </div>
+                {{!content_items}}
             </div>
 
             <nav>
@@ -175,21 +109,29 @@ def page_flips():
 ################################################################################
 
 @route('/annotate')
-def index():
-    '''
+def annotate():
 
-    <li><a href="#item1">Self-destruction</a></li>
+    ann_dir = 'Chennai/Chennai_Tweets/'
 
-    <div class="bb-item" id="item1">
-        <div class="content">
-            <div class="scroller">
-                
-            </div>
-        </div>
-    </div>
+    list_files = get_files(ann_dir)
 
-    '''
+    ann_files = set()
 
+    for fname in list_files:
+        ann_files.add(ann_dir+fname[:-4])
+
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    menu_items = ""
+    content_items = ""
+
+    for idx, ann_file in enumerate(ann_files):
+
+        menu_items += '<li><a href="#item'+str(idx)+'">'+ann_file.replace(ann_dir,"")+'</a></li>'
+
+        content_items += '<div class="bb-item" id="item'+str(idx)+'"><div class="content"><div class="scroller">'+get_ann_by_file_name(ann_file)+'</div></div></div>}'
+
+    return template(page_flips(), {"menu_items": menu_items, "content_items": content_items})
 
 ################################################################################
 
