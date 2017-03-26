@@ -7,46 +7,40 @@ from collections import defaultdict
 ################################################################################
 ################################################################################
 
-def show_dialog_box():
+@route('/<filename:path>')
+def send_static(filename):
+    return static_file(filename, root='static/')
 
-    db = '''
+################################################################################
+################################################################################
 
-    <h1>Welcome to Geoann</h1>
+def get_files(path):
+    files = list()
 
-    <h2>Choose a file to start annotating</h2>
+    for (dirpath, _, filenames) in os.walk(path):
+        for filename in filenames:
+            files.append(filename)
 
-    <input id="selectedFile" name="files[]" accept=".txt" type="file" style="position:absolute;visibility:hidden;"/>
-    <input type="button" id="browseButton" value="Select a tweet" onclick="selectedFile.click()">
-
-    <output id="list"></output>
-
-    <script>
-        function handleFileSelect(evt) {
-            var files = evt.target.files; // FileList object
-
-            // files is a FileList of File objects. List some properties.
-            var output = [];
-            for (var i = 0, f; f = files[i]; i++) {
-                output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                          f.size, ' bytes, last modified: ',
-                          f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                          '</li>');
-            }
-
-            document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-        }
-
-        document.getElementById('selectedFile').addEventListener('change', handleFileSelect, false);
-
-    </script>
-
-    '''
-
-    return db
+    return files
 
 ################################################################################
 
-def page_flips():
+def get_ann_files():
+
+    ann_dir = 'Chennai/Chennai_Tweets/'
+
+    list_files = get_files(ann_dir)
+
+    ann_files = set()
+
+    for fname in list_files:
+        ann_files.add(ann_dir+fname[:-4])
+
+    return list(ann_files), ann_dir
+
+################################################################################
+
+def html():
 
     return '''
 
@@ -62,7 +56,29 @@ def page_flips():
 		<link rel="stylesheet" type="text/css" href="css/bookblock.css" />
 		<link rel="stylesheet" type="text/css" href="css/custom.css" />
 		<script src="js/modernizr.custom.79639.js"></script>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/style-vis.css">
+        <script type="text/javascript" src="js/head.js"></script>
 	</head>
+
+    <!-- load all the libraries upfront, which takes forever. -->
+    <script type="text/javascript" src="js/brat_loader.js"></script>
+
+    <!-- let's do the configuration -->
+    <script type="text/javascript">
+        var collData = {
+            entity_types: [ {
+                    type   : 'Location',
+                    labels : ['Location', 'Loc'],
+                    bgColor: '#FF866C',
+                    borderColor: 'darken'
+            } ]
+        };
+    </script>
+
+    {{!brat_anns_data}}
+
+    {{!brat_embed_function}}
 
     <div id="container" class="container">
 
@@ -72,7 +88,6 @@ def page_flips():
             <ul id="menu-toc" class="menu-toc">
                 {{!menu_items}}
             </ul>
-
         </div>
 
         <div class="bb-custom-wrapper">
@@ -108,92 +123,9 @@ def page_flips():
 
 ################################################################################
 
-@route('/annotate')
-def annotate():
+def brat_tweet_annotations_data(id):
 
-    ann_dir = 'Chennai/Chennai_Tweets/'
-
-    list_files = get_files(ann_dir)
-
-    ann_files = set()
-
-    for fname in list_files:
-        ann_files.add(ann_dir+fname[:-4])
-
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    menu_items = ""
-    content_items = ""
-
-    for idx, ann_file in enumerate(ann_files):
-
-        menu_items += '<li><a href="#item'+str(idx)+'">'+ann_file.replace(ann_dir,"")+'</a></li>'
-
-        content_items += '<div class="bb-item" id="item'+str(idx)+'"><div class="content"><div class="scroller">'+get_ann_by_file_name(ann_file)+'</div></div></div>}'
-
-    return template(page_flips(), {"menu_items": menu_items, "content_items": content_items})
-
-################################################################################
-
-def get_files(path):
-    files = list()
-
-    for (dirpath, _, filenames) in os.walk(path):
-        for filename in filenames:
-            files.append(filename)
-
-    return files
-
-################################################################################
-
-@route('/<filename:path>')
-def send_static(filename):
-    return static_file(filename, root='static/')
-
-def brat_template():
-
-    return '''
-        <head>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-            <link rel="stylesheet" type="text/css" href="css/style-vis.css">
-            <script type="text/javascript" src="js/head.js"></script>
-        </head>
-
-        <!-- load all the libraries upfront, which takes forever. -->
-        <script type="text/javascript" src="js/brat_loader.js"></script>
-
-        <!-- let's do the configuration -->
-        <script type="text/javascript">
-        var collData = {
-            entity_types: [ {
-                    type   : 'Location',
-                    labels : ['Location', 'Loc'],
-                    bgColor: '#FF866C',
-                    borderColor: 'darken'
-            } ]
-        };
-        </script>
-
-        <!-- we simply call it inside a script element -->
-        <script type="text/javascript">
-            var docData = {{!annotations}};
-        </script>
-
-        <!-- the visualization will be embedded here. we'll just need to tell
-        brat the div ID in a Util.embed() call-->
-        <div id="embedding-entity-example"></div>
-
-
-        <script type="text/javascript">
-            head.ready(function() {
-                // Evaluate the code from the example (with ID
-                // 'embedding-entity-example') and show it to the user
-                Util.embed('embedding-entity-example', $.extend({}, collData),
-                        $.extend({}, docData));//, webFontURLs);
-            });
-        </script>
-
-        '''
+    return "var docData"+str(id)+" = {{!annotations}}; "
 
 ################################################################################
 
@@ -228,58 +160,88 @@ def get_ann_by_file_name(fname):
 
             entities += "['"+a[0]+"', 'Location', [["+str(start_idx)+", "+str(end_idx)+"]]],"
 
-    temp = "{text:'"+tweet[0]+"',entities:["+entities+"],}"
-
-    return template(brat_template(), {"annotations": temp})
+    return "{text:'"+tweet[0]+"',entities:["+entities+"],} "
 
 ################################################################################
 
-@route('/geoann')
-def index():
+def get_brat_anns_data():
 
-    ann_dir = 'Chennai/Chennai_Tweets/'
+    ann_files, ann_dir = get_ann_files()
 
-    list_files = get_files(ann_dir)
+    data = list()
 
-    ann_files = set()
+    for id, ann_file in enumerate(ann_files):
 
-    for fname in list_files:
-        ann_files.add(ann_dir+fname[:-4])
+        id += 1
 
-    for x in ann_files:
-        return get_ann_by_file_name(x)
+        data.append(template(brat_tweet_annotations_data(id), {"annotations": get_ann_by_file_name(ann_file)}))
 
-################################################################################
-
-@route('/g')
-def temp():
-
-    my_dict={'number': '123', 'street': 'Fake St.', 'city': 'Fakeville'}
-
-    return template('I live at {{number}} {{street}}, {{city}}', **my_dict)
+    return '<script type="text/javascript"> ' + "\n".join(data) + ' </script>'
 
 ################################################################################
 
-from bottle import route, request
+def get_brat_embed_script(len_ann_files):
+    ''' Embed function '''
 
-@route('/login')
-def login():
-    return '''
-        <form action="/login" method="post">
-            Username: <input name="username" type="text" />
-            Password: <input name="password" type="password" />
-            <input value="Login" type="submit" />
-        </form>
-    '''
+    lines = list()
 
-@route('/login', method='POST')
-def do_login():
-    username = request.forms.get('username')
-    password = request.forms.get('password')
-    if check_login(username, password):
-        return "<p>Your login information was correct.</p>"
-    else:
-        return "<p>Login failed.</p>"
+    for id in range(len_ann_files):
+
+        id += 1
+
+        lines.append("Util.embed('embedding-brat_anns_"+str(id)+"', $.extend({}, collData), $.extend({}, docData"+str(id)+"));")
+
+    t = '''
+        <script type="text/javascript">
+            head.ready(function() {
+                {{!brat_embed_functions}}
+            });
+        </script>
+        '''
+
+    return template(t, {"brat_embed_functions": "\n".join(lines)})
+
+################################################################################
+################################################################################
+################################################################################
+
+@route('/annotate')
+def annotate():
+
+    ann_files, ann_dir = get_ann_files()
+
+    menu_items = ""
+    content_items = ""
+
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    for idx, ann_file in enumerate(ann_files):
+
+        idx += 1
+
+        menu_items += '''<li>
+                            <a href="#item'''+str(idx)+'''">
+                                '''+ann_file.replace(ann_dir,"")+'''
+                            </a>
+                        </li>'''
+
+        content_items += ''' <div class="bb-item" id="item'''+str(idx)+'''">
+                                <div class="content">
+                                    <div class="scroller">
+                                        <div id="embedding-brat_anns_'''+str(idx)+'''">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>'''
+
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    brat_embed_script = get_brat_embed_script(len(ann_files))
+
+    return template(html(), {   "menu_items": menu_items,
+                                "content_items": content_items,
+                                "brat_anns_data": get_brat_anns_data(),
+                                "brat_embed_function": brat_embed_script})
 
 ################################################################################
 
