@@ -87,7 +87,7 @@ var Visualizer = (function($, window, undefined) {
       for (var fi = 0, nfi = 0; fi < this.unsegmentedOffsets.length; fi++) {
         var begin = this.unsegmentedOffsets[fi][0];
         var end = this.unsegmentedOffsets[fi][1];
-
+      
         for (var ti = begin; ti < end; ti++) {
           var c = text.charAt(ti);
           if (c == '\n' || c == '\r') {
@@ -101,7 +101,7 @@ var Visualizer = (function($, window, undefined) {
             begin = ti;
           }
         }
-
+      
         if (begin !== null) {
           this.offsets.push([begin, end]);
           this.segmentedOffsetsMap[nfi++] = fi;
@@ -295,7 +295,7 @@ var Visualizer = (function($, window, undefined) {
       });
     };
 
-    var Visualizer = function(dispatcher, svgId) {
+    var Visualizer = function(dispatcher, svgId, webFontURLs) {
       var $svgDiv = $('#' + svgId);
       if (!$svgDiv.length) {
         throw Error('Could not find container with id="' + svgId + '"');
@@ -2900,7 +2900,7 @@ Util.profileReport();
       };
 
       var triggerRender = function() {
-        if (svg && ((isRenderRequested && isCollectionLoaded) || requestedData)) {
+        if (svg && ((isRenderRequested && isCollectionLoaded) || requestedData) && Util.areFontsLoaded()) {
           isRenderRequested = false;
           if (requestedData) {
 
@@ -3272,6 +3272,8 @@ Util.profileStart('before render');
         // do not reload while the user is in the dialog
         return !drawing;
       };
+
+      Util.loadFonts(webFontURLs, dispatcher);
 
       dispatcher.
           on('collectionChanged', collectionChanged).

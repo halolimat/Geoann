@@ -34,12 +34,12 @@ text {
   margin-left: auto;
   margin-right: auto;
   width: 30em;
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Liberation Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 .center_wrapper > div > div h1 {
   text-align: center;
-  font-size: 25px;
+  font-size: 20px;
 }
 #no_svg_wrapper {
   display: none;
@@ -49,7 +49,7 @@ svg {
   width: 100%;
   height: 1px;
   border: 1px solid #7fa2ff;
-  font-size: 50px;
+  font-size: 30px;
   /* font-size: 14px; */
 }
 svg.reselect {
@@ -58,7 +58,7 @@ svg.reselect {
 
 /* "basic" font */
 text {
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Liberation Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -75,7 +75,7 @@ path {
 /* "basic" font */
 .span text {
   /*  font-size: 10.5px; */
-  font-size: 25px;
+  font-size: 20px;
   text-anchor: middle;
   font-family: 'PT Sans Caption', sans-serif;
   pointer-events: none;
@@ -83,16 +83,16 @@ path {
 
 /* this should likely match span font */
 .span_type_label {
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 /* this should likely match arc font */
 .arc_type_label {
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 .attribute_type_label .ui-button-text {
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'PT Sans Caption', sans-serif;
 }
 
@@ -275,7 +275,7 @@ rect.shadow_EditHighlight {
 }
 
 .arcs text {
-  font-size: 25px;
+  font-size: 20px;
   text-anchor: middle;
   font-family: 'PT Sans Caption', sans-serif;
   /* dominant-baseline: central; */
@@ -478,12 +478,14 @@ fieldset legend {
   font-style: normal;
   font-weight: normal;
   src: local('Liberation Sans'), local('Liberation-Sans'), url('static/fonts/Liberation_Sans-Regular.ttf') format('truetype');
+  /*src: local('Liberation Sans'), local('Liberation-Sans'), url('https://github.com/taylor/fonts/blob/master/LiberationSans-Regular.ttf?raw=true') format('truetype');*/
 }
 @font-face {
   font-family: 'PT Sans Caption';
   font-style: normal;
   font-weight: normal;
   src: local('PT Sans Caption'), local('PTSans-Caption'), url('static/fonts/PT_Sans-Caption-Web-Regular.ttf') format('truetype');
+  /*src: local('PT Sans Caption'), local('PTSans-Caption'), url('https://github.com/google/fonts/blob/master/ofl/ptsanscaption/PT_Sans-Caption-Web-Regular.ttf?raw=true') format('truetype');*/
 }
 
 /* Apple iPad, iPhone, iPod */
