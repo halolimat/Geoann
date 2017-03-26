@@ -74,8 +74,7 @@ path {
 
 /* "basic" font */
 .span text {
-  /*  font-size: 10.5px; */
-  font-size: 20px;
+  font-size: 12px;
   text-anchor: middle;
   font-family: 'PT Sans Caption', sans-serif;
   pointer-events: none;

@@ -1,3 +1,7 @@
+// #############################################################################
+// Edited by: Hussein S. Al-Olimat      hussein@knoesis.org
+// #############################################################################
+
 // -*- Mode: JavaScript; tab-width: 2; indent-tabs-mode: nil; -*-
 // vim:set ft=javascript ts=2 sw=2 sts=2 cindent:
 
@@ -2944,6 +2948,19 @@ Util.profileStart('before render');
 
       var highlight, highlightArcs, highlightSpans, commentId;
 
+      // new event
+      var onClick = function(evt) {
+        var target = $(evt.target);
+        var id;
+        if (id = target.attr('data-span-id')) {
+          // TODO: replace here with your code for annotations
+          alert("This should be replaced with a pop up window for annotating. When done, annotations should be saved to the file for the annotated entity " + id)
+        } else if (id = target.attr('data-sent')) {
+          // TODO: replace this one too to allow for annotating the whole sentence instead of only the entities
+          alert("This should be replaced with a pop up window for annotating the whole sentence.")
+        }
+      }
+
       var onMouseOver = function(evt) {
         var target = $(evt.target);
         var id;
@@ -3071,6 +3088,7 @@ Util.profileStart('before render');
       };
 
       var onMouseOut = function(evt) {
+
         var target = $(evt.target);
         target.removeClass('badTarget');
         dispatcher.post('hideComment');
@@ -3288,7 +3306,8 @@ Util.profileStart('before render');
           on('current', gotCurrent).
           on('clearSVG', clearSVG).
           on('mouseover', onMouseOver).
-          on('mouseout', onMouseOut);
+          on('mouseout', onMouseOut).
+          on('click', onClick);
     };
 
     return Visualizer;

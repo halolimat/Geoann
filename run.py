@@ -1,3 +1,8 @@
+################################################################################
+# Author: Hussein S. Al-Olimat      <hussein@knoesis.org>
+# License: BSD 3 clause
+################################################################################
+
 import json, os
 import numpy as np
 from bottle import Bottle, static_file, request, route, run, template
@@ -60,10 +65,8 @@ def html():
 
         var tweets_urls = [{{!tweet_urls_array}}];
 
-        http://localhost:8080/annotate?tweet_id=671934960702349056
-
         function changeTweet(dir) {
-            var currentSrc = "{{!host}}/annotate?tweet_id={{!div_name}}"
+            var currentSrc = "{{!host}}/start?tweet_id={{!div_name}}"
             var url = tweets_urls[tweets_urls.indexOf(currentSrc) + (dir || 1)] || tweets_urls[dir ? tweets_urls.length - 1 : 0];
             window.location.href = "http://"+url;
         }
@@ -183,18 +186,21 @@ def get_tweet_urls_array(ann_files):
 
     urls = list()
 
-    # http://localhost:8080/annotate?tweet_id=671934506450861952
+    # NOTE: example http://localhost:8080/start?tweet_id=671934506450861952
     for ann_file in ann_files:
-        urls.append('"'+host+"/annotate?tweet_id="+ann_file+'"')
+        urls.append('"'+host+"/start?tweet_id="+ann_file+'"')
 
     return ", ".join(urls)
 
 ################################################################################
 
-@app.route('/annotate', method='GET')
-def annotate():
+@app.route('/start', method='GET')
+def start():
 
     tweet_id = request.query.tweet_id
+
+    if not tweet_id:
+        return "you should choose the tweet id from the set of files in the folder"
 
     ann_files, ann_dir = get_ann_files()
 
@@ -210,6 +216,37 @@ def annotate():
                                 "host": request.get_header('host')})
 
 ################################################################################
+
+@app.route('/ignore', method='GET')
+def opendialog():
+    ''' Leave for later ..
+    This should allow us to choose the files for annotations, sets the working directory.
+    The code below is client side.. Do not work!
+    '''
+
+    return '''
+
+        <head>
+            <script type="text/javascript" src="//code.jquery.com/jquery-1.8.3.js"></script>
+
+            <script type="text/javascript">
+                $(window).load(function(){
+                    var input = document.getElementById('ann');
+
+                    input.onchange = function () {
+                        var filename = this.value.substring(12);
+                    };
+                });
+
+            </script>
+
+        </head>
+
+        <body>
+            <input type='file' id="ann" style="visibility: hidden; width: 1px; height: 1px" accept=".ann" />
+            <a href="" onclick="document.getElementById('ann').click(); return false">Start Annotating</a>
+        </body>
+    '''
 
 if __name__ == "__main__":
 
