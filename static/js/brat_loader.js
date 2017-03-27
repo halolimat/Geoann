@@ -17,8 +17,8 @@ head.js(
     'static/js/client/src/visualizer.js'
 );
 
-//var webFontURLs = [
-//    'static/fonts/Astloch-Bold.ttf',
-//    'static/fonts/PT_Sans-Caption-Web-Regular.ttf',
-//    'static/fonts/Liberation_Sans-Regular.ttf'
-//];
+var webFontURLs = [
+    'static/css/fonts/Astloch-Bold.ttf',
+    'static/css/fonts/PT_Sans-Caption-Web-Regular.ttf',
+    'static/css/fonts/Liberation_Sans-Regular.ttf'
+];
