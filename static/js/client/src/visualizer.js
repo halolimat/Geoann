@@ -321,7 +321,7 @@ var Visualizer = (function($, window, undefined) {
       var coloredCurlies = true; // color curlies by box BG
       var arcSlant = 15; //10;
       var minArcSlant = 8;
-      var arcHorizontalSpacing = 10; // min space boxes with connecting arc
+      var arcHorizontalSpacing = 5; // min space boxes with connecting arc
       var rowSpacing = -5;          // for some funny reason approx. -10 gives "tight" packing.
       var sentNumMargin = 20;
       var smoothArcCurves = true;   // whether to use curves (vs lines) in arcs
@@ -387,7 +387,7 @@ var Visualizer = (function($, window, undefined) {
       // due to silly Chrome bug, I have to make it pay attention
       var forceRedraw = function() {
         if (!$.browser.chrome) return; // not needed
-        $svg.css('margin-bottom', 1);
+        $svg.css('margin-bottom', 10);
         setTimeout(function() { $svg.css('margin-bottom', 0); }, 0);
       }
 
@@ -2954,9 +2954,45 @@ Util.profileStart('before render');
         var id;
         if (id = target.attr('data-span-id')) {
           // TODO: replace here with your code for annotations
-          alert("This should be replaced with a pop up window for annotating. When done, annotations should be saved to the file for the annotated entity " + id)
+
+          window.divClone=$("#myModal").clone();
+          window.annId = id;
+          $(".modal").css("display", "block");
+          $("#model-text").html(data.spans[id].text);
+          google.maps.event.addDomListener(window, 'load', initMap(data.spans[id].text));
+          //alert(data.spans[id].text;)
+//var garr = {
+//id: '1',
+//name: 'Bounding-Box-1',
+//coordinate: '13.051353078812106, 80.21846087646486,13.029122526463176, 80.20060174560558'
+//};
+//table.push(garr);
+//creatT(table);
+
+
+
+$.getJSON('http://localhost:8080/read', {
+       wordlist: JSON.stringify(id)
+   }, function(data){
+       received_arr = data.result;
+       for(var k in received_arr){
+        var updatearr="";
+        updatearr = received_arr[k][0] + "," + received_arr[k][1] + "," + received_arr[k][2] + "," + received_arr[k][3];
+        var Nentry = {
+                id: k,
+                annId: id,
+                name: 'Bounding-Box-' + k,
+                coordinate: updatearr
+            };
+            table.push(Nentry);
+            creatT(table);
+       }
+   });
+
+            
         } else if (id = target.attr('data-sent')) {
           // TODO: replace this one too to allow for annotating the whole sentence instead of only the entities
+          console.log(id);
           alert("This should be replaced with a pop up window for annotating the whole sentence.")
         }
       }

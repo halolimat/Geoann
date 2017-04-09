@@ -2,17 +2,20 @@
 # Author: Hussein S. Al-Olimat      <hussein@knoesis.org>
 # License: BSD 3 clause
 ################################################################################
-
+import googlemaps
 import json, os
 import numpy as np
 from collections import defaultdict
-from flask import Flask, request, send_from_directory, render_template_string
-
+from flask import Flask, request, send_from_directory, render_template_string, render_template, jsonify
+import glob
+from file import remov
+import urllib2
+from radius import Ldist
 ################################################################################
 ################################################################################
-
+tweet_id=''
+word_id = ''
 app = Flask(__name__, static_url_path='')
-
 @app.route('/static/<path:path>')
 def static_proxy(path):
     # send_static_file will guess the correct MIME type
@@ -20,6 +23,116 @@ def static_proxy(path):
 
 ################################################################################
 ################################################################################
+@app.route('/location',methods = ['POST', 'GET'])
+def result():
+    loc = request.args.get('a', 0, type=str)
+    print loc
+
+    add = loc
+    add = urllib2.quote(add)
+    radius = 50000
+    a = 13.0594
+    b = 80.2457
+    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=YOUR_API_HERE"  % (add,a,b,radius)
+    print geocode_url
+    req = urllib2.urlopen(geocode_url)
+    jsonResponse = json.loads(req.read())
+    #pprint.pprint(jsonResponse)
+    #print jsonResponse.keys()
+    #lat=jsonResponse['results'][0]
+    #print lat
+    packet = []
+    data = jsonResponse["results"]
+    for entry in data:
+        cord = entry["geometry"]["location"]
+        name = entry['name']
+        name = name.encode('utf-8')
+        code = [name,cord['lat'],cord['lng']]
+        dist = Ldist(a, b, cord['lat'], cord['lng'])
+        if (dist>50):
+            continue
+        packet.append(code)
+    print packet
+
+
+    return jsonify(response=packet)
+################################################################################
+################################################################################
+@app.route('/write', methods=['GET', 'POST'])
+def write():
+    wordlist = json.loads(request.args.get('wordlist'))
+    wrt(wordlist)
+    # do some stuff
+    #return jsonify(result=wordlist)
+    print wordlist
+    return jsonify(result="done")
+
+################################################################################
+################################################################################
+
+
+###########################################################################################
+def wrt(arr):
+    # Open a file
+    file = tweet_id+".ann"
+    file= file.encode("utf-8")
+    path ="/home/dipnot/Desktop/final project/merge/Geoann-master/Chennai/Chennai_Tweets/"+file
+    remov(path,word_id)
+    try:
+        fo=open(path,"a")
+    except:
+        fo = open(path, "w+")
+    for i,data in enumerate(arr):
+        annId = str(data['annId'])
+        crdn = " "+str(data['coordinate'])
+        wdata = "G"+str(i+1)+"\t"+annId+"\t"+crdn
+        fo.write(wdata+'\n');
+        print i
+
+    # Close opend file
+    fo.close()
+    print tweet_id
+##############################################################################################
+
+################################################################################
+################################################################################
+@app.route('/read', methods=['GET', 'POST'])
+def rd():
+    wordlist = json.loads(request.args.get('wordlist'))
+    crr = read(wordlist)
+    # do some stuff
+    #return jsonify(result=wordlist)
+    print crr
+    return jsonify(result=crr)
+
+################################################################################
+################################################################################
+
+
+###########################################################################################
+def read(id):
+    # Open a file
+    global word_id
+    word_id=id
+    file = tweet_id+".ann"
+    file= file.encode("utf-8")
+    path ="/home/dipnot/Desktop/final project/merge/Geoann-master/Chennai/Chennai_Tweets/"+file
+    fo=open(path,"r")
+    gnn=fo.readlines()
+    rcord=[]
+
+    for g in gnn:
+        g = g.replace("\n", "").split("\t")
+        if "G" in g[0]:
+            if id==g[1]:
+                nesw = g[2].split(",")
+                print rcord
+                rcord.append(nesw)
+    return rcord
+    # Close opened file
+    fo.close()
+    print tweet_id
+##############################################################################################
 
 def get_files(path):
     files = list()
@@ -54,9 +167,15 @@ def html():
     <head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="widdth=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="css/style-vis.css">
+        <link rel="stylesheet" type="text/css" href="css/pop-style.css">
         <script type="text/javascript" src="js/head.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=____YOUR_API_KEY_HERE___&libraries=drawing"></script>
+    <script type="text/javascript" src="/static/js/client/src/map.js"></script>
+        <script type="text/javascript" src = "/static/js/client/src/func.js"></script>
 	</head>
 
     <script>
@@ -72,12 +191,20 @@ def html():
         document.onkeydown = function(e) {
             e = e || window.event;
             if (e.keyCode == '37') {
-                changeTweet(-1) //left <- show Prev image
+                changeTweet(-1); //left <- show Prev image
             } else if (e.keyCode == '39') {
                 // right -> show next image
-                changeTweet()
+                changeTweet();
             }
         }
+
+        $(document).on("click", "#next", function(){
+    changeTweet();
+});
+
+$(document).on("click", "#prev", function(){
+    changeTweet(-1);
+});
 
     </script>
         <!-- load all the libraries upfront, which takes forever. -->
@@ -89,7 +216,7 @@ def html():
                 entity_types: [ {
                         type   : 'Location',
                         labels : ['Location', 'Loc'],
-                        bgColor: '#FF866C',
+                        bgColor: '#17b4ed',
                         borderColor: 'darken'
                 } ]
             };
@@ -100,8 +227,44 @@ def html():
     {{brat_embed_function|safe}}
 
     <body>
-        <div id="{{div_name|safe}}">
+    <div class="main-header">GeoAnnotator</div>
+        <div id="{{div_name|safe}}"></div>
+        <div class="previous round" id="prev">&#8249;</div>
+        <div class="next round" id="next">&#8250;</div>
+        </div><div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="tops">
+            <span id="ann">GeoAnnotator</span>
+                <span class="close_top">&times;</span></div>
+            <div class="gbox">
+                <div id="model-text"></div>
+                <input type="text" name="text" placeholder="Location Search......">
+                <button id="fetchButton" class="button">Search</button>
+                <button id="addBox" class="button">Add Box</button>
+                <button id="insertButton" class="button">insert</button>
+                <div class="lcontainer">
+                <div class="header">Bbox Entry:</div>
+                <div id="list_Modal" class="list_modal"></div></div>
+                <br>
+                <div class="cssload-loader">
+    <div class="cssload-inner cssload-one"></div>
+    <div class="cssload-inner cssload-two"></div>
+    <div class="cssload-inner cssload-three"></div>
+</div>
+                <button id="doneButton" class="button">commit to file</button>
+                <br>
+                <br>
+            </div>
         </div>
+        <div id="map-canvas"></div>
+        <script type="text/javascript" src="/static/js/client/src/tbl.js"></script>
+        <script type="text/javascript">
+          var btn = document.getElementById('fetchButton');
+          google.maps.event.addDomListener(btn, 'click', initMap);
+          </script>
+
+
     </body>
 
     '''
@@ -200,7 +363,7 @@ def get_tweet_urls_array(ann_files):
 
 @app.route('/start')
 def start():
-
+    global tweet_id
     tweet_id = request.args.get('tweet_id')
 
     if not tweet_id:

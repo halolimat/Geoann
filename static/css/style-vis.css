@@ -11,6 +11,13 @@ text {
 }
 */
 
+body {
+    background-image: url("/static/bgimg.jpg");
+    background-color: #ffffff;
+    background-size: 110%;
+
+}
+
 #svg {
   margin: 34px auto 100px;
   padding-top: 15px;
@@ -283,7 +290,7 @@ rect.shadow_EditHighlight {
 
 .background0 {
   stroke: none;
-  fill: #ffffff;
+  fill: #FFF;
 }
 
 .background1 {
