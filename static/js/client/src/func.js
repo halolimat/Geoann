@@ -14,6 +14,9 @@
 // Get the button that submits the model
 var donebtn = $("#doneButton");
 
+//get the modal element
+var modal = $("#myModal");
+
 // Get the <span> element that closes the modal
 //var span = $(".close_top:first");
 //
@@ -53,6 +56,20 @@ $(document).on( "click","#fetchButton", function() {
     $(".cssload-loader").css("z-index", "1");
 });
 
+window.onclick = function(event) {
+        //(console.log(event.target.id));
+        if (event.target.id == 'myModal') {
+        $("#myModal").css("display", "none");
+    console.log(table);
+    
+      //window.location.href = "http://127.0.0.1:5000/write/"+[ne,sw];
+     $.getJSON('http://localhost:8080/write', {
+       wordlist: JSON.stringify(table)
+   }, function(data){
+       alert(data.result);
+   });
+     $("#myModal").replaceWith(divClone);
+     table=[];
+   }
 
- 
-
+  }

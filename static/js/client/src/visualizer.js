@@ -2993,7 +2993,72 @@ $.getJSON('http://localhost:8080/read', {
         } else if (id = target.attr('data-sent')) {
           // TODO: replace this one too to allow for annotating the whole sentence instead of only the entities
           console.log(id);
-          alert("This should be replaced with a pop up window for annotating the whole sentence.")
+          //alert("This should be replaced with a pop up window for annotating the whole sentence.")
+          //alert (id);
+
+
+
+window.divClone=$("#myModal").clone();
+          window.annId = id;
+          $(".modal").css("display", "block");
+          google.maps.event.addDomListener(window, 'load', initMap('chennai'));
+          //alert(data.spans[id].text;)
+//var garr = {
+//id: '1',
+//name: 'Bounding-Box-1',
+//coordinate: '13.051353078812106, 80.21846087646486,13.029122526463176, 80.20060174560558'
+//};
+//table.push(garr);
+//creatT(table);
+
+
+
+$.getJSON('http://localhost:8080/read', {
+       wordlist: JSON.stringify(id)
+   }, function(data){
+       received_arr = data.result;
+       for(var k in received_arr){
+        var updatearr="";
+        updatearr = received_arr[k][0] + "," + received_arr[k][1] + "," + received_arr[k][2] + "," + received_arr[k][3];
+        var Nentry = {
+                id: k,
+                annId: id,
+                name: 'Bounding-Box-' + k,
+                coordinate: updatearr
+            };
+            table.push(Nentry);
+            creatT(table);
+       }
+   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
       }
 

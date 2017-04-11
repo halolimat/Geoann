@@ -245,7 +245,6 @@ $(document).on("click", "#prev", function(){
                 <div id="model-text"></div>
                 <input type="text" name="text" placeholder="Location Search......">
                 <button id="fetchButton" class="button">Search</button>
-                <button id="addBox" class="button">Add Box</button>
                 <button id="insertButton" class="button">insert</button>
                 <div class="lcontainer">
                 <div class="header">Bbox Entry:</div>

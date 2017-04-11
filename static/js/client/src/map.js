@@ -324,20 +324,6 @@ var selectedShape;
 
         });
 
-        $('#addBox').click(function() {
-            if (isCreated == 1) {
-                drawingManager.setDrawingMode(null);
-                removeRectangle();
-                addRectangle((midLat + 0.03), (midLng + 0.03), (midLat - 0.03), (midLng - 0.03));
-                isCreated = 1;
-            } else {
-                isCreated = 1;
-                drawingManager.setDrawingMode(null);
-                addRectangle((midLat + 0.03), (midLng + 0.03), (midLat - 0.03), (midLng - 0.03));
-            }
-
-        });
-
         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
         //var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         //    this.setZoom(14);
