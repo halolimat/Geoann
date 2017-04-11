@@ -344,10 +344,10 @@ var selectedShape;
         //    google.maps.event.removeListener(boundsListener);
         //});
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() { $(".cssload-loader").css("z-index", "-1"); });
-//    google.maps.event.addListener(map, 'click', function() { 
-//ole.log("map clicked");
-//        var popup = $('#myPopup');
-//popup.css("visibility", "visible"); });
+    google.maps.event.addListener(map, 'click', function() { 
+console.log("map clicked");
+        var popup = $('.popup');
+popup.css("display", "block"); });
     });
 
     $('.cssload-loader').show();

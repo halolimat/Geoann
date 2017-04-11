@@ -46,8 +46,8 @@ hr {
     margin-left: 110px;
     padding: 0px;
     border: 1px solid #0d7da2;
-    width: 80%;
-    height: 600px;
+    width: auto;
+    height: auto;
     position: absolute;
 }
 
@@ -140,8 +140,6 @@ margin-bottom: 12px;
 .gbox {
     padding: 20px;
     text-align: center;
-    width: 1036px;
-    height: 513px;
 }
 
 #model-text {
@@ -261,10 +259,12 @@ font-size: 19px;
 #map-canvas {
 height: 500px;
 width: 876px;
-margin-right: -34px;
+margin-right: -17px;
 margin-top: -273px;
 box-shadow: #000000;
 float: right;
+margin-left: 195px;
+margin-bottom: 3px;
 }
 .round{
     border-radius: 50%;
@@ -311,6 +311,7 @@ line-height: 20px;
 
 /* Popup container - can be anything you want */
 .popup {
+display: none;
 position: relative;
 -moz-user-select: none;
 float: right;
@@ -331,7 +332,7 @@ position: absolute;
 z-index: 1;
 bottom: 125%;
 left: 50%;
-margin-left: -62px;
+margin-left: -79px;
 line-height: 17px;
 font-size: 14px;
 }
