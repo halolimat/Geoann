@@ -191,7 +191,8 @@ span[id^="e"] {
     margin-bottom: -12px;
     margin-top: 4px;
     color: #fff;
-    line-height: 1.9;
+    line-height: 1.4;
+font-size: 19px;
 }
 
 .list_modal {
@@ -273,9 +274,9 @@ float: right;
     height: 65px;
     width: 54px;
     text-align: center;
-    line-height: 54px;
+    line-height: 39px;
     font-size: 69px;
-    color: #71c4f2;
+    color: #397ea5;
     display: inline-block;
     padding: 8px 16px;
 }
@@ -285,9 +286,9 @@ float: right;
     height: 65px;
     width: 54px;
     text-align: center;
-    line-height: 54px;
+    line-height: 39px;
     font-size: 69px;
-    color: #71c4f2;
+    color: #397ea5;
     display: inline-block;
     padding: 8px 16px;
     float: right;
@@ -299,6 +300,50 @@ font-size: 26px;
 color: #ffffff;
 line-height: 20px;
 }
+
+/* Popup container - can be anything you want */
+.popup {
+position: relative;
+-moz-user-select: none;
+float: right;
+margin-top: 49px;
+margin-right: 66px;
+}
+
+/* The actual popup */
+.popup .popuptext {
+width: 160px;
+background-color: #ececec;
+color: #2a2a2a;
+text-align: center;
+border-radius: 6px;
+padding: 8px 0;
+position: absolute;
+z-index: 1;
+bottom: 125%;
+left: 50%;
+margin-left: -80px;
+line-height: 15px;
+font-size: 14px;
+}
+
+
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: 59px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #ececec transparent transparent transparent;
+}
+
+
+
+
 
 .cssload-container {
     position: relative;

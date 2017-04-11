@@ -33,7 +33,7 @@ def result():
     radius = 50000
     a = 13.0594
     b = 80.2457
-    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=YOUR_API_HERE"  % (add,a,b,radius)
+    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDHbZsWCuT-ukgd15JV4eSHr-E9h9-S3vA"  % (add,a,b,radius)
     print geocode_url
     req = urllib2.urlopen(geocode_url)
     jsonResponse = json.loads(req.read())
@@ -76,7 +76,8 @@ def wrt(arr):
     # Open a file
     file = tweet_id+".ann"
     file= file.encode("utf-8")
-    path ="/home/dipnot/Desktop/final project/merge/Geoann-master/Chennai/Chennai_Tweets/"+file
+    current_path= os.path.dirname(os.path.abspath(__file__))
+    path =current_path + "/Chennai/Chennai_Tweets/"+file
     remov(path,word_id)
     try:
         fo=open(path,"a")
@@ -116,7 +117,8 @@ def read(id):
     word_id=id
     file = tweet_id+".ann"
     file= file.encode("utf-8")
-    path ="/home/dipnot/Desktop/final project/merge/Geoann-master/Chennai/Chennai_Tweets/"+file
+    current_path= os.path.dirname(os.path.abspath(__file__))
+    path =current_path + "/Chennai/Chennai_Tweets/"+file
     fo=open(path,"r")
     gnn=fo.readlines()
     rcord=[]
@@ -173,7 +175,7 @@ def html():
         <script type="text/javascript" src="js/head.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=____YOUR_API_KEY_HERE___&libraries=drawing"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7YOOWjDL1lO3n96oXc4_KPPrJL79ZCpY&libraries=drawing"></script>
     <script type="text/javascript" src="/static/js/client/src/map.js"></script>
         <script type="text/javascript" src = "/static/js/client/src/func.js"></script>
 	</head>
@@ -238,6 +240,8 @@ $(document).on("click", "#prev", function(){
             <span id="ann">GeoAnnotator</span>
                 <span class="close_top">&times;</span></div>
             <div class="gbox">
+            <div class="popup"><span class="popuptext">Use this button for Drawing mode.</span>
+</div>
                 <div id="model-text"></div>
                 <input type="text" name="text" placeholder="Location Search......">
                 <button id="fetchButton" class="button">Search</button>

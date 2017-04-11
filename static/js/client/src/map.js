@@ -44,7 +44,7 @@ var selectedShape;
         // Multiple Markers
         markers = cord;
         var drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.MARKER,
+    //drawingMode: google.maps.drawing.OverlayType.MARKER,
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_RIGHT,
@@ -292,11 +292,7 @@ var selectedShape;
             shapes = [];
             selectedShape = null;
             rectangle.setMap(null);
-        
-
-           rectangle.setMap(null);
             infoWindow.close();
-            //shapes.setMap(null);
             //console.log(shapes);
         }
 

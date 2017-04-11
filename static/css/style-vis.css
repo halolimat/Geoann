@@ -15,8 +15,7 @@ body {
     background-image: url("/static/bgimg.jpg");
     background-color: #ffffff;
     background-size: 110%;
-
-}
+  }
 
 #svg {
   margin: 34px auto 100px;
