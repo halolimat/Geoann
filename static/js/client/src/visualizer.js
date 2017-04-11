@@ -2992,7 +2992,7 @@ $.getJSON('http://localhost:8080/read', {
             
         } else if (id = target.attr('data-sent')) {
           // TODO: replace this one too to allow for annotating the whole sentence instead of only the entities
-          console.log(id);
+          //console.log(id);
           //alert("This should be replaced with a pop up window for annotating the whole sentence.")
           //alert (id);
 
@@ -3001,6 +3001,7 @@ $.getJSON('http://localhost:8080/read', {
 window.divClone=$("#myModal").clone();
           window.annId = id;
           $(".modal").css("display", "block");
+          $("#model-text").html(id);
           google.maps.event.addDomListener(window, 'load', initMap('chennai'));
           //alert(data.spans[id].text;)
 //var garr = {

@@ -33,7 +33,7 @@ def result():
     radius = 50000
     a = 13.0594
     b = 80.2457
-    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDHbZsWCuT-ukgd15JV4eSHr-E9h9-S3vA"  % (add,a,b,radius)
+    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyA7YOOWjDL1lO3n96oXc4_KPPrJL79ZCpY"  % (add,a,b,radius)
     print geocode_url
     req = urllib2.urlopen(geocode_url)
     jsonResponse = json.loads(req.read())
@@ -240,7 +240,7 @@ $(document).on("click", "#prev", function(){
             <span id="ann">GeoAnnotator</span>
                 <span class="close_top">&times;</span></div>
             <div class="gbox">
-            <div class="popup"><span class="popuptext">Use this button for Drawing mode.</span>
+            <div class="popup"><span class="popuptext" id="myPopup">Use this button for Drawing mode.</span>
 </div>
                 <div id="model-text"></div>
                 <input type="text" name="text" placeholder="Location Search......">
@@ -258,9 +258,11 @@ $(document).on("click", "#prev", function(){
                 <button id="doneButton" class="button">commit to file</button>
                 <br>
                 <br>
+                <div id="map-canvas"></div>
             </div>
+
         </div>
-        <div id="map-canvas"></div>
+        
         <script type="text/javascript" src="/static/js/client/src/tbl.js"></script>
         <script type="text/javascript">
           var btn = document.getElementById('fetchButton');

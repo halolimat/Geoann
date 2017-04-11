@@ -116,6 +116,10 @@ input[type="text"].focus {
     border-bottom: solid 2px #969696;
 }
 
+#insertButton {
+    margin-bottom: 42px;
+}
+
 .main-header {
     text-align: center;
 color: #9ec4d2;
@@ -136,6 +140,8 @@ margin-bottom: 12px;
 .gbox {
     padding: 20px;
     text-align: center;
+    width: 1036px;
+    height: 513px;
 }
 
 #model-text {
@@ -189,7 +195,7 @@ span[id^="e"] {
     max-width: 194px;
     margin-left: -10px;
     margin-bottom: -12px;
-    margin-top: 4px;
+    margin-top: -39px;
     color: #fff;
     line-height: 1.4;
 font-size: 19px;
@@ -198,7 +204,7 @@ font-size: 19px;
 .list_modal {
     background-color: #ececec;
     color: #4d4d4d;
-    max-width: 178px;
+    width: 178px;
     max-height: 380px;
     overflow: auto;
     padding: 8px;
@@ -206,6 +212,8 @@ font-size: 19px;
     margin-top: 13px;
     margin-left: -10px;
     font-size: 16px;
+    padding-bottom: 0px;
+    position: absolute;
     /* border: 1px solid #0d7da2;
     border-radius: 8px;
     -moz-box-shadow:    inset 0 0 10px #000000;
@@ -251,10 +259,10 @@ font-size: 19px;
 }
 
 #map-canvas {
-height: 74%;
-width: 867px;
-margin-right: 165px;
-margin-top: 100px;
+height: 500px;
+width: 876px;
+margin-right: -34px;
+margin-top: -273px;
 box-shadow: #000000;
 float: right;
 }
@@ -306,12 +314,13 @@ line-height: 20px;
 position: relative;
 -moz-user-select: none;
 float: right;
-margin-top: 49px;
+margin-top: 45px;
 margin-right: 66px;
 }
 
 /* The actual popup */
 .popup .popuptext {
+/*visibility: hidden;*/
 width: 160px;
 background-color: #ececec;
 color: #2a2a2a;
@@ -322,8 +331,8 @@ position: absolute;
 z-index: 1;
 bottom: 125%;
 left: 50%;
-margin-left: -80px;
-line-height: 15px;
+margin-left: -62px;
+line-height: 17px;
 font-size: 14px;
 }
 
@@ -341,6 +350,11 @@ font-size: 14px;
     border-color: #ececec transparent transparent transparent;
 }
 
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
 
 
 

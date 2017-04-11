@@ -24,7 +24,7 @@ function initMap(Sstr) {
             return;
         }
 
-        console.log("inside map function")
+        //console.log("inside map function")
         var map;
         var midLat = 0;
         var midLng = 0;
@@ -129,7 +129,9 @@ var selectedShape;
             }
             shapes = [];
             selectedShape = null;
+            if (rectangle != null) {
             rectangle.setMap(null);
+            }
         }
         infoWindow.close();
 
@@ -180,7 +182,7 @@ var selectedShape;
             // Automatically center the map fitting all markers on the screen
             map.fitBounds(bounds);
             if (i < 3) {
-                console.log("zoom");
+                //console.log("zoom");
                 map.setZoom(15);
             }
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,12 +193,12 @@ var selectedShape;
         }
         midLng = midLng / i;
         midLat = midLat / i;
-        console.log(midLat, midLng, i);
+        //console.log(midLat, midLng, i);
         ///////////////////////////////////////;///////////////////////////////////////////////////////////////////////////////////////////
 
 
         $(document).on("click", 'div[id^="t"]', function() {
-            console.log($(this).text());
+            //console.log($(this).text());
             for (var x = 0; x < table.length; x++) {
                 if (table[x].name === $(this).text()) {
                     var y = x;
@@ -291,7 +293,9 @@ var selectedShape;
             }
             shapes = [];
             selectedShape = null;
+            if (rectangle != null) {
             rectangle.setMap(null);
+            }
             infoWindow.close();
             //console.log(shapes);
         }
@@ -302,7 +306,7 @@ var selectedShape;
             var updatearr = "";
             var updatearr = ne.lat() + "," + ne.lng() + "," + sw.lat() + "," + sw.lng();
             for (var i in table) {}
-            console.log(i);
+            //console.log(i);
             k = 0;
             if (i >= 0) {
                 j = parseInt(i);
@@ -310,7 +314,7 @@ var selectedShape;
                 k = parseInt(j);
                 k += 1;
             }
-            console.log(annId);
+            //console.log(annId);
 
 
             var Nentry = {
@@ -323,6 +327,16 @@ var selectedShape;
             creatT(table);
 
         });
+        $(document).on("click", ".close", function(){
+    var id = $(this).attr('id');
+    //to get the data boud with this (X) sign
+    //var txt = $("#t"+id).text();
+    //alert(txt);
+    var newT = rA(table, id);
+    creatT(newT);
+    removeRectangle();
+    //alert(id);
+});
 
         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
         //var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
@@ -330,6 +344,10 @@ var selectedShape;
         //    google.maps.event.removeListener(boundsListener);
         //});
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() { $(".cssload-loader").css("z-index", "-1"); });
+//    google.maps.event.addListener(map, 'click', function() { 
+//ole.log("map clicked");
+//        var popup = $('#myPopup');
+//popup.css("visibility", "visible"); });
     });
 
     $('.cssload-loader').show();

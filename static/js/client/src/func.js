@@ -35,12 +35,12 @@ $(document).on( "click",".close_top:first", function() {
     $("#myModal").replaceWith(divClone);
     table=[];
     
-    console.log(annWord);
+    //console.log(annWord);
 });
 
 $(document).on( "click","#doneButton", function() {
     $("#myModal").css("display", "none");
-    console.log(table);
+    //console.log(table);
     
       //window.location.href = "http://127.0.0.1:5000/write/"+[ne,sw];
      $.getJSON('http://localhost:8080/write', {
@@ -60,7 +60,7 @@ window.onclick = function(event) {
         //(console.log(event.target.id));
         if (event.target.id == 'myModal') {
         $("#myModal").css("display", "none");
-    console.log(table);
+    //console.log(table);
     
       //window.location.href = "http://127.0.0.1:5000/write/"+[ne,sw];
      $.getJSON('http://localhost:8080/write', {
