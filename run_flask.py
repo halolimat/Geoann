@@ -33,7 +33,8 @@ def result():
     radius = 50000
     a = 13.0594
     b = 80.2457
-    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDA0LEtyiF_1FAyLWpFUUoTtrYkopGKJlI"  % (add,a,b,radius)
+    #geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDA0LEtyiF_1FAyLWpFUUoTtrYkopGKJlI"  % (add,a,b,radius)
+    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyCrw1mGpS8ebkTK8KeXvC9JRZCuEVl3zjk" % (add,a,b,radius)
     print geocode_url
     req = urllib2.urlopen(geocode_url)
     jsonResponse = json.loads(req.read())
@@ -169,7 +170,7 @@ def html():
     <head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="widdth=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="static/favicon.png"/>
 		<link rel="stylesheet" type="text/css" href="css/style-vis.css">
         <link rel="stylesheet" type="text/css" href="css/pop-style.css">
@@ -197,7 +198,7 @@ def html():
             //if flag is set commit data to file
 
             if (Eflag==1) {
-            $.getJSON('http://localhost:8080/write', {
+            $.getJSON('write', {
        wordlist: JSON.stringify(table)
    }, function(data){
        alert(data.result);
@@ -209,7 +210,7 @@ def html():
             //if flag is set commit data to file
 
     if (Eflag==1) {
-    $.getJSON('http://localhost:8080/write', {
+    $.getJSON('write', {
     wordlist: JSON.stringify(table)
    }, function(data){
        alert(data.result);

@@ -2972,7 +2972,7 @@ window.Eflag=0;
 
 
 
-$.getJSON('http://localhost:8080/read', {
+$.getJSON('read', {
        wordlist: JSON.stringify(id)
    }, function(data){
        received_arr = data.result;
@@ -3016,7 +3016,7 @@ window.divClone=$("#myModal").clone();
 
 
 
-$.getJSON('http://localhost:8080/read', {
+$.getJSON('read', {
        wordlist: JSON.stringify(id)
    }, function(data){
        received_arr = data.result;

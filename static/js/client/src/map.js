@@ -6,7 +6,7 @@ function initMap(Sstr) {
     }
 
     function callAjax(handleData) {
-        $.getJSON('http://localhost:8080/location', {
+        $.getJSON('location', {
             a: searchStr
         }, function(data) {
             handleData(data)
