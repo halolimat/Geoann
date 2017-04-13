@@ -2943,7 +2943,7 @@ Util.profileStart('before render');
         }
       };
 
-
+window.Eflag=0;
       // event handlers
 
       var highlight, highlightArcs, highlightSpans, commentId;
@@ -2957,6 +2957,7 @@ Util.profileStart('before render');
 
           window.divClone=$("#myModal").clone();
           window.annId = id;
+          window.Eflag=1;
           $(".modal").css("display", "block");
           $("#model-text").html(data.spans[id].text);
           google.maps.event.addDomListener(window, 'load', initMap(data.spans[id].text));
@@ -3000,6 +3001,7 @@ $.getJSON('http://localhost:8080/read', {
 
 window.divClone=$("#myModal").clone();
           window.annId = id;
+          window.Eflag=1;
           $(".modal").css("display", "block");
           $("#model-text").html(id);
           google.maps.event.addDomListener(window, 'load', initMap('chennai'));

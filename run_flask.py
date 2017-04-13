@@ -194,12 +194,34 @@ def html():
         document.onkeydown = function(e) {
             e = e || window.event;
             if (e.keyCode == '37') {
-                changeTweet(-1); //left <- show Prev image
-            } else if (e.keyCode == '39') {
-                // right -> show next image
-                changeTweet();
-            }
-        }
+            //if flag is set commit data to file
+
+            if (Eflag==1) {
+            $.getJSON('http://localhost:8080/write', {
+       wordlist: JSON.stringify(table)
+   }, function(data){
+       alert(data.result);
+   });
+    }
+    changeTweet(-1); //left <- show Prev image
+    } 
+    else if (e.keyCode == '39') {
+            //if flag is set commit data to file
+
+    if (Eflag==1) {
+    $.getJSON('http://localhost:8080/write', {
+    wordlist: JSON.stringify(table)
+   }, function(data){
+       alert(data.result);
+   });
+    }
+
+ // right -> show next image
+changeTweet();
+    }
+ 
+            
+    }
 
         $(document).on("click", "#next", function(){
     changeTweet();
