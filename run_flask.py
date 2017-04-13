@@ -200,7 +200,7 @@ def html():
             $.getJSON('http://localhost:8080/write', {
        wordlist: JSON.stringify(table)
    }, function(data){
-       alert(data.result);
+       //alert(data.result);
    });
     }
     changeTweet(-1); //left <- show Prev image

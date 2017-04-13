@@ -46,10 +46,11 @@ $(document).on( "click","#doneButton", function() {
      $.getJSON('http://localhost:8080/write', {
        wordlist: JSON.stringify(table)
    }, function(data){
-       alert(data.result);
+       //alert(data.result);
    });
      $("#myModal").replaceWith(divClone);
      table=[];
+     window.Eflag=0;
 });
 
 $(document).on( "click","#fetchButton", function() {
@@ -66,10 +67,11 @@ window.onclick = function(event) {
      $.getJSON('http://localhost:8080/write', {
        wordlist: JSON.stringify(table)
    }, function(data){
-       alert(data.result);
+       //alert(data.result);
    });
      $("#myModal").replaceWith(divClone);
      table=[];
+     window.Eflag=0;
    }
 
   }
