@@ -34,6 +34,7 @@ $(document).on( "click",".close_top:first", function() {
     $("#myModal").css("display", "none");
     $("#myModal").replaceWith(divClone);
     table=[];
+    window.Eflag=0;
     
     //console.log(annWord);
 });

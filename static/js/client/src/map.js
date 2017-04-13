@@ -31,7 +31,7 @@ function initMap(Sstr) {
         var rectangle;
         var isCreated = 0
         var shapes = [];
-var selectedShape;
+        var selectedShape = null;
         var bounds = new google.maps.LatLngBounds();
         var mapOptions = {
             mapTypeId: 'roadmap'
@@ -44,23 +44,23 @@ var selectedShape;
         // Multiple Markers
         markers = cord;
         var drawingManager = new google.maps.drawing.DrawingManager({
-    //drawingMode: google.maps.drawing.OverlayType.MARKER,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_RIGHT,
-      drawingModes: [ 'rectangle']
-    },
-    //markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-    rectangleOptions: {
-      fillColor: '#4d81f9',
-      fillOpacity: 0.55,
-      strokeWeight: 0,
-      clickable: true,
-      editable: true,
-      draggable: true,
-      zIndex: 1
-    }
-  });
+            //drawingMode: google.maps.drawing.OverlayType.MARKER,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_RIGHT,
+                drawingModes: ['rectangle']
+            },
+            //markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+            rectangleOptions: {
+                fillColor: '#4d81f9',
+                fillOpacity: 0.55,
+                strokeWeight: 0,
+                clickable: true,
+                editable: true,
+                draggable: true,
+                zIndex: 1
+            }
+        });
         drawingManager.setMap(map);
 
 
@@ -111,31 +111,31 @@ var selectedShape;
 
 
 
- google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
-                    var newShape = e.overlay;
-                    
-                    newShape.type = e.type;
-                    shapes.push(newShape);
-                    drawingManager.setDrawingMode(null);
-                    google.maps.event.addListener(newShape, 'bounds_changed', showNewRectInfo);
-                    selectedShape= newShape;
-                    isCreated = 1;
-                });
-   
-    google.maps.event.addListener(drawingManager, "drawingmode_changed", function () {
-        if (drawingManager.getDrawingMode() != null) {
-            for (var i = 0; i < shapes.length; i++) {
-                shapes[i].setMap(null);
-            }
-            shapes = [];
-            selectedShape = null;
-            if (rectangle != null) {
-            rectangle.setMap(null);
-            }
-        }
-        infoWindow.close();
+            google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+                var newShape = e.overlay;
 
-    });
+                newShape.type = e.type;
+                shapes.push(newShape);
+                drawingManager.setDrawingMode(null);
+                google.maps.event.addListener(newShape, 'bounds_changed', showNewRectInfo);
+                selectedShape = newShape;
+                isCreated = 1;
+            });
+
+            google.maps.event.addListener(drawingManager, "drawingmode_changed", function() {
+                if (drawingManager.getDrawingMode() != null) {
+                    for (var i = 0; i < shapes.length; i++) {
+                        shapes[i].setMap(null);
+                    }
+                    shapes = [];
+                    selectedShape = null;
+                    if (rectangle != null) {
+                        rectangle.setMap(null);
+                    }
+                }
+                infoWindow.close();
+
+            });
 
 
 
@@ -234,6 +234,7 @@ var selectedShape;
             infoWindow.setPosition(ne);
             infoWindow.open(map);
         }
+
         function showNewRectInfo(event) {
             var ne = selectedShape.getBounds().getNorthEast();
             var sw = selectedShape.getBounds().getSouthWest();
@@ -294,49 +295,52 @@ var selectedShape;
             shapes = [];
             selectedShape = null;
             if (rectangle != null) {
-            rectangle.setMap(null);
+                rectangle.setMap(null);
             }
             infoWindow.close();
             //console.log(shapes);
         }
 
         $("#insertButton").click(function(event) {
-            var ne = selectedShape.getBounds().getNorthEast();
-        var sw = selectedShape.getBounds().getSouthWest();
-            var updatearr = "";
-            var updatearr = ne.lat() + "," + ne.lng() + "," + sw.lat() + "," + sw.lng();
-            for (var i in table) {}
-            //console.log(i);
-            k = 0;
-            if (i >= 0) {
-                j = parseInt(i);
-                j = table[j].id;
-                k = parseInt(j);
-                k += 1;
+            if (selectedShape != null) {
+                var ne = selectedShape.getBounds().getNorthEast();
+                var sw = selectedShape.getBounds().getSouthWest();
+                var updatearr = "";
+                var updatearr = ne.lat() + "," + ne.lng() + "," + sw.lat() + "," + sw.lng();
+                for (var i in table) {}
+                //console.log(i);
+                k = 0;
+                if (i >= 0) {
+                    j = parseInt(i);
+                    j = table[j].id;
+                    k = parseInt(j);
+                    k += 1;
+                }
+                //console.log(annId);
+
+
+                var Nentry = {
+                    id: k,
+                    annId: annId,
+                    name: 'Bounding-Box-' + k,
+                    coordinate: updatearr
+                };
+                table.push(Nentry);
+                creatT(table);
+                removeRectangle();
             }
-            //console.log(annId);
-
-
-            var Nentry = {
-                id: k,
-                annId: annId,
-                name: 'Bounding-Box-' + k,
-                coordinate: updatearr
-            };
-            table.push(Nentry);
-            creatT(table);
 
         });
-        $(document).on("click", ".close", function(){
-    var id = $(this).attr('id');
-    //to get the data boud with this (X) sign
-    //var txt = $("#t"+id).text();
-    //alert(txt);
-    var newT = rA(table, id);
-    creatT(newT);
-    removeRectangle();
-    //alert(id);
-});
+        $(document).on("click", ".close", function() {
+            var id = $(this).attr('id');
+            //to get the data boud with this (X) sign
+            //var txt = $("#t"+id).text();
+            //alert(txt);
+            var newT = rA(table, id);
+            creatT(newT);
+            removeRectangle();
+            //alert(id);
+        });
         //document.onkeydown = function(e) {
         //    console.log("keydown");
         //}
@@ -347,10 +351,11 @@ var selectedShape;
         //    google.maps.event.removeListener(boundsListener);
         //});
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() { $(".cssload-loader").css("z-index", "-1"); });
-    google.maps.event.addListener(map, 'click', function() { 
-console.log("map clicked");
-        var popup = $('.popup');
-popup.css("display", "block"); });
+        google.maps.event.addListener(map, 'click', function() {
+            console.log("map clicked");
+            var popup = $('.popup');
+            popup.css("display", "block");
+        });
     });
 
     $('.cssload-loader').show();

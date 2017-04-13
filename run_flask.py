@@ -33,7 +33,7 @@ def result():
     radius = 50000
     a = 13.0594
     b = 80.2457
-    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyA7YOOWjDL1lO3n96oXc4_KPPrJL79ZCpY"  % (add,a,b,radius)
+    geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDA0LEtyiF_1FAyLWpFUUoTtrYkopGKJlI"  % (add,a,b,radius)
     print geocode_url
     req = urllib2.urlopen(geocode_url)
     jsonResponse = json.loads(req.read())
@@ -200,7 +200,7 @@ def html():
             $.getJSON('http://localhost:8080/write', {
        wordlist: JSON.stringify(table)
    }, function(data){
-       //alert(data.result);
+       alert(data.result);
    });
     }
     changeTweet(-1); //left <- show Prev image
