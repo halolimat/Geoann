@@ -170,6 +170,7 @@ def html():
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="widdth=device-width, initial-scale=1.0">
+        <link rel="icon" href="static/favicon.png"/>
 		<link rel="stylesheet" type="text/css" href="css/style-vis.css">
         <link rel="stylesheet" type="text/css" href="css/pop-style.css">
         <script type="text/javascript" src="js/head.js"></script>
