@@ -17,11 +17,19 @@ function initMap(Sstr) {
         // here you use the output
         var cord = output.response;
         //console.log(cord[0]);
+        var not_found = false;
 
         if (cord[0] == null) {
-            $("#map-none").css("display", "table");
-            document.getElementById("map-none").innerHTML = "<p>nothing to display!!!</p>";
-            return;
+            //$("#map-none").css("display", "table");
+            //document.getElementById("map-canvas").innerHTML = "<p>nothing to display!!!</p>";
+            //return;
+
+            //TODO: This should be passed automatically as the default search
+            //      query. I don't know how you are doing this so I will leave
+            //      it to you to figure it out.s
+            cord = [["Chennai",13.0826802,80.2707184]];
+            not_found = true;
+
         }
 
         //console.log("inside map function")
@@ -63,7 +71,6 @@ function initMap(Sstr) {
         });
         drawingManager.setMap(map);
 
-
         // Info Window Content
         var infoWindowContent = [];
         cord.forEach(function(elem) {
@@ -74,7 +81,7 @@ function initMap(Sstr) {
         var infoWindow = new google.maps.InfoWindow(),
             marker, i;
 
-        // Loop through our array of markers & place each one on the map  
+        // Loop through our array of markers & place each one on the map
         for (i = 0; i < markers.length; i++) {
             var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
             bounds.extend(position);
@@ -84,32 +91,13 @@ function initMap(Sstr) {
                 title: markers[i][0]
             });
 
-
-
-            // Allow each marker to have an info window    
+            // Allow each marker to have an info window
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
                     infoWindow.setContent(infoWindowContent[i][0]);
                     infoWindow.open(map, marker);
                 }
             })(marker, i));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
                 var newShape = e.overlay;
@@ -137,65 +125,30 @@ function initMap(Sstr) {
 
             });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // Automatically center the map fitting all markers on the screen
-            map.fitBounds(bounds);
-            if (i < 3) {
-                //console.log("zoom");
-                map.setZoom(15);
-            }
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             midLat += markers[i][1];
             window.midLat = midLat;
             midLng += markers[i][2];
             window.midLat = midLat;
-        }
-        midLng = midLng / i;
-        midLat = midLat / i;
-        //console.log(midLat, midLng, i);
-        ///////////////////////////////////////;///////////////////////////////////////////////////////////////////////////////////////////
 
+            midLng = midLng / i;
+            midLat = midLat / i;
+            //console.log(midLat, midLng, i);
+            ///////////////////////////////////////;///////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        map.fitBounds(bounds);
+        zoomChangeBoundsListener =
+            google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+                if (markers.length < 3){
+                    this.setZoom(15);
+                }
+
+                if (not_found == true){
+                  map.setZoom(10);
+                }
+        });
+        setTimeout(function(){google.maps.event.removeListener(zoomChangeBoundsListener)}, 2000);
 
         $(document).on("click", 'div[id^="t"]', function() {
             //console.log($(this).text());
@@ -227,7 +180,6 @@ function initMap(Sstr) {
                 'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
                 'New south-west corner: ' + sw.lat() + ', ' + sw.lng() + '</div>';
 
-
             // Set the info window's content and position.
 
             infoWindow.setContent(contentString);
@@ -242,7 +194,6 @@ function initMap(Sstr) {
             var contentString = '<div class="map-info-window">' + '<b>Rectangle moved.</b><br>' +
                 'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
                 'New south-west corner: ' + sw.lat() + ', ' + sw.lng() + '</div>';
-
 
             // Set the info window's content and position.
 
@@ -285,7 +236,7 @@ function initMap(Sstr) {
             map.fitBounds(rectangle.getBounds());
             drawingManager.setDrawingMode(null);
             //shapes.push(rectangle);
-            //rectangle.push(rectangle);  
+            //rectangle.push(rectangle);
         }
 
         function removeRectangle() {
@@ -318,7 +269,6 @@ function initMap(Sstr) {
                 }
                 //console.log(annId);
 
-
                 var Nentry = {
                     id: k,
                     annId: annId,
@@ -350,7 +300,9 @@ function initMap(Sstr) {
         //    this.setZoom(14);
         //    google.maps.event.removeListener(boundsListener);
         //});
-        google.maps.event.addListenerOnce(map, 'tilesloaded', function() { $(".cssload-loader").css("z-index", "-1"); });
+        google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+            $(".cssload-loader").css("z-index", "-1");
+        });
         google.maps.event.addListener(map, 'click', function() {
             console.log("map clicked");
             var popup = $('.popup');
