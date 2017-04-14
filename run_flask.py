@@ -201,11 +201,11 @@ def html():
             $.getJSON('write', {
        wordlist: JSON.stringify(table)
    }, function(data){
-       alert(data.result);
+       //alert(data.result);
    });
     }
     changeTweet(-1); //left <- show Prev image
-    } 
+    }
     else if (e.keyCode == '39') {
             //if flag is set commit data to file
 
@@ -213,15 +213,15 @@ def html():
     $.getJSON('write', {
     wordlist: JSON.stringify(table)
    }, function(data){
-       alert(data.result);
+       //alert(data.result);
    });
     }
 
  // right -> show next image
 changeTweet();
     }
- 
-            
+
+
     }
 
         $(document).on("click", "#next", function(){
@@ -286,7 +286,7 @@ $(document).on("click", "#prev", function(){
             </div>
 
         </div>
-        
+
         <script type="text/javascript" src="/static/js/client/src/tbl.js"></script>
         <script type="text/javascript">
           var btn = document.getElementById('fetchButton');
