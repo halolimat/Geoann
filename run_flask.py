@@ -15,6 +15,7 @@ from radius import Ldist
 ################################################################################
 tweet_id=''
 word_id = ''
+default_bb = []
 app = Flask(__name__, static_url_path='')
 @app.route('/static/<path:path>')
 def static_proxy(path):
@@ -31,8 +32,8 @@ def result():
     add = loc
     add = urllib2.quote(add)
     radius = 50000
-    a = 13.0594
-    b = 80.2457
+    a = default_bb[0];
+    b = default_bb[1];
     #geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyDA0LEtyiF_1FAyLWpFUUoTtrYkopGKJlI"  % (add,a,b,radius)
     geocode_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&location=%d,%d&radius=%d&key=AIzaSyCrw1mGpS8ebkTK8KeXvC9JRZCuEVl3zjk" % (add,a,b,radius)
     print geocode_url
@@ -53,10 +54,25 @@ def result():
         if (dist>50):
             continue
         packet.append(code)
-    print packet
 
+    if (packet == []):
+        #print (name+"#######################################################")
+        #print default_bb
+        packet=[[name,default_bb[0],default_bb[1]]];
 
     return jsonify(response=packet)
+################################################################################
+def bbread():
+    current_path= os.path.dirname(os.path.abspath(__file__))
+    path =current_path + "/Chennai/"+"bb.ini"
+    fo=open(path,"r")
+    bb=fo.readlines()
+    for b in bb:
+        b = b.replace("\n", "").split(",")
+    b1= (float(b[0])+float(b[2]))/2
+    b2= (float(b[1])+float(b[3]))/2
+    b = [b1,b2]
+    return b
 ################################################################################
 ################################################################################
 @app.route('/write', methods=['GET', 'POST'])
@@ -168,6 +184,7 @@ def html():
     return '''
 
     <head>
+    <title>GeoAnn</title>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -402,6 +419,9 @@ def start():
 
     # remove the full directory name from each file name
     ann_files = [x.replace(ann_dir,"") for x in ann_files]
+    global default_bb
+    default_bb = bbread()
+    #print default_bb
 
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

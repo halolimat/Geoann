@@ -17,9 +17,9 @@ function initMap(Sstr) {
         // here you use the output
         var cord = output.response;
         //console.log(cord[0]);
-        var not_found = false;
+        //var not_found = false;
 
-        if (cord[0] == null) {
+        //if (cord[0] == null) {
             //$("#map-none").css("display", "table");
             //document.getElementById("map-canvas").innerHTML = "<p>nothing to display!!!</p>";
             //return;
@@ -27,10 +27,10 @@ function initMap(Sstr) {
             //TODO: This should be passed automatically as the default search
             //      query. I don't know how you are doing this so I will leave
             //      it to you to figure it out.s
-            cord = [["Chennai",13.0826802,80.2707184]];
-            not_found = true;
+            //cord = [["Chennai",13.0826802,80.2707184]];
+           //not_found = true;
 
-        }
+        //}
 
         //console.log("inside map function")
         var map;
