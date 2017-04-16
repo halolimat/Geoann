@@ -34,6 +34,7 @@ function initMap(Sstr) {
 
         //console.log("inside map function")
         var map;
+        var markArr =[];
         var midLat = 0;
         var midLng = 0;
         var rectangle;
@@ -90,6 +91,7 @@ function initMap(Sstr) {
                 map: map,
                 title: markers[i][0]
             });
+            markArr.push(marker);
 
             // Allow each marker to have an info window
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -124,6 +126,7 @@ function initMap(Sstr) {
                 infoWindow.close();
 
             });
+            
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             midLat += markers[i][1];
@@ -144,7 +147,7 @@ function initMap(Sstr) {
                     this.setZoom(15);
                 }
 
-                if (not_found == true){
+                if (cord[0][0] == 'default'){
                   map.setZoom(10);
                 }
         });
@@ -308,6 +311,13 @@ function initMap(Sstr) {
             var popup = $('.popup');
             popup.css("display", "block");
         });
+        if (cord[0][0] == 'default') {
+                //console.log(markers);
+                for (i = 0; i < markArr.length; i++){
+                markArr[i].setMap(null);
+                //map.setZoom(1);
+            }
+            }
     });
 
     $('.cssload-loader').show();

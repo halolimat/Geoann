@@ -58,7 +58,7 @@ def result():
     if (packet == []):
         #print (name+"#######################################################")
         #print default_bb
-        packet=[[name,default_bb[0],default_bb[1]]];
+        packet=[["default",default_bb[0],default_bb[1]]];
 
     return jsonify(response=packet)
 ################################################################################
