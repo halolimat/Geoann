@@ -325,6 +325,8 @@ def brat_tweet_annotations_data(id):
 
 def get_ann_by_file_name(fname):
 
+    fname = fname.replace("//", "/")
+
     with open(fname+".ann") as f:
         ann = f.readlines()
     with open(fname+".txt") as f:
@@ -363,7 +365,7 @@ def get_brat_anns_data(tweet_id):
     ann_files, ann_dir = get_ann_files()
 
     temp = brat_tweet_annotations_data(tweet_id)
-    anns = get_ann_by_file_name(ann_dir + tweet_id)
+    anns = get_ann_by_file_name(ann_dir+"/"+tweet_id)
 
     data = render_template_string(temp, annotations=anns)
 
