@@ -167,7 +167,7 @@ def get_files(path):
 def get_ann_files():
 
     current_path = os.path.dirname(os.path.abspath(__file__))
-    ann_dir = current_path + 'Chennai/Chennai_Tweets/'
+    ann_dir = current_path + '/Chennai/Chennai_Tweets/'
 
     list_files = get_files(ann_dir)
 
