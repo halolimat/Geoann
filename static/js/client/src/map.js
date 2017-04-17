@@ -102,6 +102,7 @@ function initMap(Sstr) {
             })(marker, i));
 
             google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+
                 var newShape = e.overlay;
 
                 newShape.type = e.type;
@@ -109,6 +110,7 @@ function initMap(Sstr) {
                 drawingManager.setDrawingMode(null);
                 google.maps.event.addListener(newShape, 'bounds_changed', showNewRectInfo);
                 selectedShape = newShape;
+                showNewRectInfo();
                 isCreated = 1;
             });
 
@@ -185,7 +187,9 @@ function initMap(Sstr) {
 
             // Set the info window's content and position.
 
-            infoWindow.setContent(contentString);
+            infoWindow.setContent({contentString,
+                pixelOffset:1
+            });
             infoWindow.setPosition(ne);
             infoWindow.open(map);
         }
@@ -194,9 +198,8 @@ function initMap(Sstr) {
             var ne = selectedShape.getBounds().getNorthEast();
             var sw = selectedShape.getBounds().getSouthWest();
 
-            var contentString = '<div class="map-info-window">' + '<b>Rectangle moved.</b><br>' +
-                'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
-                'New south-west corner: ' + sw.lat() + ', ' + sw.lng() + '</div>';
+            var contentString = '<div class="map-info-window">' + '<button id='+'insertButton'+' class='+'button'+'>Insert </button>' + '</div>';
+            //var contentString = '<div ' + 'id='+'insertButton'+' class='+'button'+'>Insert' + '</div>';
 
             // Set the info window's content and position.
 
@@ -255,7 +258,7 @@ function initMap(Sstr) {
             //console.log(shapes);
         }
 
-        $("#insertButton").click(function(event) {
+        $(document).on( "click","#insertButton", function(event) {
             if (selectedShape != null) {
                 var ne = selectedShape.getBounds().getNorthEast();
                 var sw = selectedShape.getBounds().getSouthWest();
