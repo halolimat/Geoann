@@ -64,7 +64,7 @@ def result():
 ################################################################################
 def bbread():
     current_path= os.path.dirname(os.path.abspath(__file__))
-    path =current_path + "/Chennai/"+"bb.ini"
+    path = current_path + "/Chennai/"+"bb.ini"
     fo=open(path,"r")
     bb=fo.readlines()
     for b in bb:
@@ -94,7 +94,7 @@ def wrt(arr):
     file = tweet_id+".ann"
     file= file.encode("utf-8")
     current_path= os.path.dirname(os.path.abspath(__file__))
-    path =current_path + "/Chennai/Chennai_Tweets/"+file
+    path = current_path + "/Chennai/Chennai_Tweets/"+file
     remov(path,word_id)
     try:
         fo=open(path,"a")
@@ -134,8 +134,8 @@ def read(id):
     word_id=id
     file = tweet_id+".ann"
     file= file.encode("utf-8")
-    current_path= os.path.dirname(os.path.abspath(__file__))
-    path =current_path + "/Chennai/Chennai_Tweets/"+file
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    path = current_path + "/Chennai/Chennai_Tweets/"+file
     fo=open(path,"r")
     gnn=fo.readlines()
     rcord=[]
@@ -166,7 +166,8 @@ def get_files(path):
 
 def get_ann_files():
 
-    ann_dir = 'Chennai/Chennai_Tweets/'
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    ann_dir = current_path + 'Chennai/Chennai_Tweets/'
 
     list_files = get_files(ann_dir)
 
