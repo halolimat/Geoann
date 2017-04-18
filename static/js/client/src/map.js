@@ -287,13 +287,10 @@ function initMap(Sstr) {
             }
 
         });
+        //window.removeRectangle=removeRectangle();
+        
         $(document).on("click", ".close", function() {
-            var id = $(this).attr('id');
-            //to get the data boud with this (X) sign
-            //var txt = $("#t"+id).text();
-            //alert(txt);
-            var newT = rA(table, id);
-            creatT(newT);
+            
             removeRectangle();
             //alert(id);
         });

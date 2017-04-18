@@ -2952,10 +2952,11 @@ window.Eflag=0;
       var onClick = function(evt) {
         var target = $(evt.target);
         var id;
+        window.divClone=$("#myModal").clone();
         if (id = target.attr('data-span-id')) {
           // TODO: replace here with your code for annotations
 
-          window.divClone=$("#myModal").clone();
+          
           window.annId = id;
           window.Eflag=1;
           $(".modal").css("display", "block");
@@ -2986,8 +2987,10 @@ $.getJSON('read', {
                 coordinate: updatearr
             };
             table.push(Nentry);
-            creatT(table);
+            
        }
+
+       creatT(table);
    });
 
             
@@ -3030,8 +3033,9 @@ $.getJSON('read', {
                 coordinate: updatearr
             };
             table.push(Nentry);
-            creatT(table);
+            
        }
+       creatT(table);
    });
 
 

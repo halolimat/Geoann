@@ -261,6 +261,9 @@ font-size: 19px;
 .tentry {
     display: inline-block;
 }
+.tentry:hover {
+cursor: pointer;
+}
 
 #map-canvas {
 height: 500px;

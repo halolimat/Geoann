@@ -31,10 +31,12 @@ donebtn.onclick = function() {
 }
 
 $(document).on( "click",".close_top:first", function() {
+    //$('#list_modal').remove();
     $("#myModal").css("display", "none");
     $("#myModal").replaceWith(divClone);
     table=[];
     window.Eflag=0;
+
     
     //console.log(annWord);
 });
@@ -53,6 +55,17 @@ $(document).on( "click","#doneButton", function() {
      table=[];
      window.Eflag=0;
 });
+$(document).on("click", ".close", function() {
+            var id = $(this).attr('id');
+            //to get the data boud with this (X) sign
+            //var txt = $("#t"+id).text();
+            //alert(txt);
+            //console.log('match');
+            var newT = rA(table, id);
+            creatT(newT);
+            //removeRectangle();
+            //alert(id);
+        });
 
 $(document).on( "click","#fetchButton", function() {
     $(".cssload-loader").css("z-index", "1");

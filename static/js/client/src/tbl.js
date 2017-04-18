@@ -30,6 +30,7 @@ window.table=table;
 creatT(table);
 
 function creatT(table){
+	//$(".class").remove();
 	document.getElementById("list_Modal").innerHTML = "";
 	for (var i in table) {
  //str += table[i].ne + " " +table[i].nw + " " +table[i].se + " " +table[i].sw; //"aa", bb", "cc"
@@ -64,6 +65,7 @@ document.getElementById("list_Modal").innerHTML +=  (i+"> "+"<div class="+"tentr
 //function to remove an entry from the table
 function rA(arr) {
 	var a=arguments, indx=a[1];
+	console.log(a[1]);
     arr.splice(indx, 1);
 return arr;
 }
