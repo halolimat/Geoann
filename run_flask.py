@@ -282,7 +282,7 @@ $(document).on("click", "#prev", function(){
             <span id="ann">GeoAnnotator</span>
                 <span class="close_top">&times;</span></div>
             <div class="gbox">
-            <div class="popup"><span class="popuptext" id="myPopup">Use this button for Drawing mode.</span>
+            <div class="popup"><span class="popuptext" id="myPopup">Click this Button to Draw Bounding Box.</span>
 </div>
                 <div id="model-text"></div>
                 <input type="text" name="text" placeholder="Location Search......">
@@ -416,6 +416,7 @@ def start():
 
     if not tweet_id:
         return "you should choose the tweet id from the set of files in the folder"
+        #tweet_id = '671935055137116032';
 
     ann_files, ann_dir = get_ann_files()
 

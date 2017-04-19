@@ -305,12 +305,12 @@ function initMap(Sstr) {
         //});
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
             $(".cssload-loader").css("z-index", "-1");
+            $('.popup').fadeIn( 1000 );
         });
-        google.maps.event.addListener(map, 'click', function() {
-            console.log("map clicked");
-            var popup = $('.popup');
-            popup.css("display", "block");
-        });
+        //google.maps.event.addListener(map, 'click', function() {
+        //    console.log("map clicked");
+        //    
+        //});
         if (cord[0][0] == 'default') {
                 //console.log(markers);
                 for (i = 0; i < markArr.length; i++){

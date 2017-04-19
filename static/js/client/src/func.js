@@ -70,7 +70,22 @@ $(document).on("click", ".close", function() {
 $(document).on( "click","#fetchButton", function() {
     $(".cssload-loader").css("z-index", "1");
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//$('#list_Modal').keypress(function(e) {
+//    if(e.which == 13) {
+//        alert('You pressed enter!');
+//    }
+//});
 
+
+
+$('#list_Modal').keydown(function(e){
+    if(e.keyCode === 13){
+            alert("Enter was pressed");
+     }  
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 window.onclick = function(event) {
         //(console.log(event.target.id));
         if (event.target.id == 'myModal') {
