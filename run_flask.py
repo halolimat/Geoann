@@ -361,14 +361,20 @@ def get_ann_by_file_name(fname):
     #  ['T1', 'Imp-Top 61 85', 'Vivekananda Nagar Street']
 
     entities = ""
+    tweet = [t.replace("'", ' ') for t in tweet]
 
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
     for a in ann:
         a = a.replace("\n", "").split("\t")
         if "T" in a[0]:
             offsets = a[1].split()
             start_idx = offsets[1]
             end_idx = offsets[2]
-            entities += "['"+a[0]+"', 'Location', [["+str(start_idx)+", "+str(end_idx)+"]]],"
+            #print city
+            if (a[2].lower()!=city.lower()):
+                entities += "['"+a[0]+"', 'Location', [["+str(start_idx)+", "+str(end_idx)+"]]],"
 
     return "{text:'"+tweet[0]+"',entities:["+entities+"],} "
 
