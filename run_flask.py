@@ -85,7 +85,7 @@ def write():
     wrt(wordlist)
     # do some stuff
     #return jsonify(result=wordlist)
-    print wordlist
+    #print wordlist
     return jsonify(result="done")
 
 ################################################################################
@@ -112,11 +112,11 @@ def wrt(arr):
         crdn = " "+str(data['coordinate'])
         wdata = "G"+str(i+1)+"\t"+annId+"\t"+crdn
         fo.write(wdata+'\n');
-        print i
+        #print i
 
     # Close opend file
     fo.close()
-    print tweet_id
+    #print tweet_id
 ##############################################################################################
 
 ################################################################################
@@ -127,7 +127,7 @@ def rd():
     crr = read(wordlist)
     # do some stuff
     #return jsonify(result=wordlist)
-    print crr
+    #print crr
     return jsonify(result=crr)
 
 ################################################################################
@@ -155,12 +155,12 @@ def read(id):
         if "G" in g[0]:
             if id==g[1]:
                 nesw = g[2].split(",")
-                print rcord
+                #print rcord
                 rcord.append(nesw)
     return rcord
     # Close opened file
     fo.close()
-    print tweet_id
+    #print tweet_id
 ##############################################################################################
 
 def get_files(path):
