@@ -15,6 +15,7 @@ from radius import Ldist
 ################################################################################
 tweet_id=''
 word_id = ''
+city = ''
 default_bb = []
 app = Flask(__name__, static_url_path='')
 @app.route('/static/<path:path>')
@@ -64,7 +65,10 @@ def result():
 ################################################################################
 def bbread():
     current_path= os.path.dirname(os.path.abspath(__file__))
-    path = current_path + "/Chennai/"+"bb.ini"
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
+    path = current_path + "/brat_annotations/" + city + "/" + city + ".ini"
     fo=open(path,"r")
     bb=fo.readlines()
     for b in bb:
@@ -94,7 +98,10 @@ def wrt(arr):
     file = tweet_id+".ann"
     file= file.encode("utf-8")
     current_path= os.path.dirname(os.path.abspath(__file__))
-    path = current_path + "/Chennai/Chennai_Tweets/"+file
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
+    path = current_path + "/brat_annotations/" + city + "/" + fldr + "/" + file
     remov(path,word_id)
     try:
         fo=open(path,"a")
@@ -135,7 +142,10 @@ def read(id):
     file = tweet_id+".ann"
     file= file.encode("utf-8")
     current_path = os.path.dirname(os.path.abspath(__file__))
-    path = current_path + "/Chennai/Chennai_Tweets/"+file
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
+    path = current_path + "/brat_annotations/" + city + "/" + fldr + "/" + file
     fo=open(path,"r")
     gnn=fo.readlines()
     rcord=[]
@@ -167,7 +177,10 @@ def get_files(path):
 def get_ann_files():
 
     current_path = os.path.dirname(os.path.abspath(__file__))
-    ann_dir = current_path + '/Chennai/Chennai_Tweets/'
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
+    ann_dir = current_path + '/brat_annotations/' + city + '/' + fldr  
 
     list_files = get_files(ann_dir)
 
@@ -176,7 +189,7 @@ def get_ann_files():
     for fname in list_files:
         ann_files.add(ann_dir+fname[:-4])
 
-    return list(ann_files), ann_dir
+    return list(ann_files), ann_dir 
 
 ################################################################################
 
@@ -205,7 +218,7 @@ def html():
         var tweets_urls = [{{tweet_urls_array|safe}}];
 
         function changeTweet(dir) {
-            var currentSrc = "{{host|safe}}start?tweet_id={{div_name|safe}}"
+            var currentSrc = "{{host|safe}}start?dataset={{div_city|safe}}_{{div_fldr|safe}}&tweet_id={{div_name|safe}}"
             var url = tweets_urls[tweets_urls.indexOf(currentSrc) + (dir || 1)] || tweets_urls[dir ? tweets_urls.length - 1 : 0];
             window.location.href = "http://"+url;
         }
@@ -273,6 +286,8 @@ $(document).on("click", "#prev", function(){
     <body>
     <div class="main-header">GeoAnnotator</div>
         <div id="{{div_name|safe}}"></div>
+        <div id="{{div_city|safe}}"></div>
+        <div id="{{div_fldr|safe}}"></div>
         <div class="previous round" id="prev">&#8249;</div>
         <div class="next round" id="next">&#8250;</div>
         </div><div id="myModal" class="modal">
@@ -353,7 +368,6 @@ def get_ann_by_file_name(fname):
             offsets = a[1].split()
             start_idx = offsets[1]
             end_idx = offsets[2]
-
             entities += "['"+a[0]+"', 'Location', [["+str(start_idx)+", "+str(end_idx)+"]]],"
 
     return "{text:'"+tweet[0]+"',entities:["+entities+"],} "
@@ -401,9 +415,13 @@ def get_tweet_urls_array(ann_files):
 
         request_host = request.host_url.replace("http://", "")
 
-        print '"'+request_host+"start?tweet_id="+ann_file+'"'
+        data_set=dataset_dir.split("_")
+        city=data_set[0]
+        fldr=data_set[1]
 
-        urls.append('"'+request_host+"start?tweet_id="+ann_file+'"')
+        print '"'+request_host+"start?dataset="+city+"_"+fldr+"&tweet_id="+ann_file+'"'
+
+        urls.append('"'+request_host+"start?dataset="+city+"_"+fldr+"&tweet_id="+ann_file+'"')
 
     return ", ".join(urls)
 
@@ -411,14 +429,23 @@ def get_tweet_urls_array(ann_files):
 
 @app.route('/start')
 def start():
-    global tweet_id
+    global tweet_id, dataset_dir
     tweet_id = request.args.get('tweet_id')
+    dataset_dir=request.args.get('dataset')
+
+    if not dataset_dir:
+        return "you should type the dataset that the tweet belongs to"
+        #dataset=chennai_set1;
 
     if not tweet_id:
         return "you should choose the tweet id from the set of files in the folder"
         #tweet_id = '671935055137116032';
 
     ann_files, ann_dir = get_ann_files()
+
+    data_set=dataset_dir.split("_")
+    city=data_set[0]
+    fldr=data_set[1]
 
     # remove the full directory name from each file name
     ann_files = [x.replace(ann_dir,"") for x in ann_files]
@@ -435,6 +462,8 @@ def start():
                 brat_embed_function=get_brat_embed_script(tweet_id),
                 tweet_urls_array=get_tweet_urls_array(ann_files),
                 div_name=tweet_id,
+                div_city=city,
+                div_fldr=fldr,
                 host=request_host)
 
 ################################################################################
