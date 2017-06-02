@@ -373,7 +373,7 @@ def get_ann_by_file_name(fname):
             start_idx = offsets[1]
             end_idx = offsets[2]
             #print city
-            if (a[2].lower()!=city.lower()):
+            if (a[2].lower()!=city.lower()) and offsets[0]!="Out-Top":
                 entities += "['"+a[0]+"', 'Location', [["+str(start_idx)+", "+str(end_idx)+"]]],"
 
     return "{text:'"+tweet[0]+"',entities:["+entities+"],} "
