@@ -1,3 +1,9 @@
+#ignore the annotations folder. Twitter data privacy concerns.
+brat_anntations/*
+
+#ignore nohup
+nohup.out
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
