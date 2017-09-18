@@ -198,134 +198,136 @@ def html():
     return '''
 
     <head>
-    <title>GeoAnn</title>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="static/favicon.png"/>
-		<link rel="stylesheet" type="text/css" href="css/style-vis.css">
+        <title>GeoAnn</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="static/favicon.png" />
+        <link rel="stylesheet" type="text/css" href="css/style-vis.css">
         <link rel="stylesheet" type="text/css" href="css/pop-style.css">
         <script type="text/javascript" src="js/head.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7YOOWjDL1lO3n96oXc4_KPPrJL79ZCpY&libraries=drawing"></script>
-    <script type="text/javascript" src="/static/js/client/src/map.js"></script>
-        <script type="text/javascript" src = "/static/js/client/src/func.js"></script>
-	</head>
-
+        <script type="text/javascript" src="/static/js/client/src/map.js"></script>
+        <script type="text/javascript" src="/static/js/client/src/func.js"></script>
+    </head>
+    
     <script>
-
-        var tweets_urls = [{{tweet_urls_array|safe}}];
-
+        var tweets_urls = [{
+            {
+                tweet_urls_array | safe
+            }
+        }];
+    
         function changeTweet(dir) {
             var currentSrc = "{{host|safe}}start?dataset={{div_city|safe}}_{{div_fldr|safe}}&tweet_id={{div_name|safe}}"
             var url = tweets_urls[tweets_urls.indexOf(currentSrc) + (dir || 1)] || tweets_urls[dir ? tweets_urls.length - 1 : 0];
-            window.location.href = "http://"+url;
+            window.location.href = "http://" + url;
         }
-
+    
         document.onkeydown = function(e) {
             e = e || window.event;
             if (e.keyCode == '37') {
-            //if flag is set commit data to file
-
-            if (Eflag==1) {
-            $.getJSON('write', {
-       wordlist: JSON.stringify(table)
-   }, function(data){
-       //alert(data.result);
-   });
-    }
-    changeTweet(-1); //left <- show Prev image
-    }
-    else if (e.keyCode == '39') {
-            //if flag is set commit data to file
-
-    if (Eflag==1) {
-    $.getJSON('write', {
-    wordlist: JSON.stringify(table)
-   }, function(data){
-       //alert(data.result);
-   });
-    }
-
- // right -> show next image
-changeTweet();
-    }
-
-
-    }
-
-        $(document).on("click", "#next", function(){
-    changeTweet();
-});
-
-$(document).on("click", "#prev", function(){
-    changeTweet(-1);
-});
-
+                //if flag is set commit data to file
+    
+                if (Eflag == 1) {
+                    $.getJSON('write', {
+                        wordlist: JSON.stringify(table)
+                    }, function(data) {
+                        //alert(data.result);
+                    });
+                }
+                changeTweet(-1); //left <- show Prev image
+            } else if (e.keyCode == '39') {
+                //if flag is set commit data to file
+    
+                if (Eflag == 1) {
+                    $.getJSON('write', {
+                        wordlist: JSON.stringify(table)
+                    }, function(data) {
+                        //alert(data.result);
+                    });
+                }
+    
+                // right -> show next image
+                changeTweet();
+            }
+    
+    
+        }
+    
+        $(document).on("click", "#next", function() {
+            changeTweet();
+        });
+    
+        $(document).on("click", "#prev", function() {
+            changeTweet(-1);
+        });
     </script>
-        <!-- load all the libraries upfront, which takes forever. -->
-        <script type="text/javascript" src="js/brat_loader.js"></script>
-
-        <!-- let's do the configuration -->
-        <script type="text/javascript">
-            var collData = {
-                entity_types: [ {
-                        type   : 'Location',
-                        labels : ['Location', 'Loc'],
-                        bgColor: '#17b4ed',
-                        borderColor: 'darken'
-                } ]
-            };
+    <!-- load all the libraries upfront, which takes forever. -->
+    <script type="text/javascript" src="js/brat_loader.js"></script>
+    
+    <!-- let's do the configuration -->
+    <script type="text/javascript">
+        var collData = {
+            entity_types: [{
+                type: 'Location',
+                labels: ['Location', 'Loc'],
+                bgColor: '#17b4ed',
+                borderColor: 'darken'
+            }]
+        };
     </script>
-
-    {{brat_anns_data|safe}}
-
-    {{brat_embed_function|safe}}
-
+    
+    {{brat_anns_data|safe}} {{brat_embed_function|safe}}
+    
     <body>
-    <div class="main-header">GeoAnnotator</div>
+        <div class="main-header">GeoAnnotator</div>
         <div id="{{div_name|safe}}"></div>
         <div id="{{div_city|safe}}"></div>
         <div id="{{div_fldr|safe}}"></div>
         <div class="previous round" id="prev">&#8249;</div>
         <div class="next round" id="next">&#8250;</div>
-        </div><div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="tops">
-            <span id="ann">GeoAnnotator</span>
-                <span class="close_top">&times;</span></div>
-            <div class="gbox">
-            <div class="popup"><span class="popuptext" id="myPopup">Click this Button to Draw Bounding Box.</span>
-</div>
-                <div id="model-text"></div>
-                <input type="text" name="text" placeholder="Location Search......">
-                <button id="fetchButton" class="button">Search</button>
-                <div class="lcontainer">
-                <div class="header">Bbox Entry:</div>
-                <div id="list_Modal" class="list_modal"></div></div>
-                <br>
-                <div class="cssload-loader">
-    <div class="cssload-inner cssload-one"></div>
-    <div class="cssload-inner cssload-two"></div>
-    <div class="cssload-inner cssload-three"></div>
-</div>
-                <button id="doneButton" class="button">commit to file</button>
-                <br>
-                <br>
-                <div id="map-canvas"></div>
-            </div>
-
         </div>
-
-        <script type="text/javascript" src="/static/js/client/src/tbl.js"></script>
-        <script type="text/javascript">
-          var btn = document.getElementById('fetchButton');
-          google.maps.event.addDomListener(btn, 'click', initMap);
-          </script>
-
-
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="tops">
+                    <span id="ann">GeoAnnotator</span>
+                    <span class="close_top">&times;</span>
+                </div>
+                <div class="gbox">
+                    <div class="popup"><span class="popuptext" id="myPopup">Click this Button to Draw Bounding Box.</span>
+                    </div>
+                    <div id="model-text"></div>
+                    <input type="text" name="text" placeholder="Location Search......">
+                    <button id="fetchButton" class="button">Search</button>
+                    <div class="lcontainer">
+                        <div class="header">Bbox Entry:</div>
+                        <div id="list_Modal" class="list_modal"></div>
+                    </div>
+                    <br>
+                    <div class="cssload-loader">
+                        <div class="cssload-inner cssload-one"></div>
+                        <div class="cssload-inner cssload-two"></div>
+                        <div class="cssload-inner cssload-three"></div>
+                    </div>
+                    <button id="doneButton" class="button">commit to file</button>
+                    <br>
+                    <br>
+                    <div id="map-canvas"></div>
+                </div>
+    
+            </div>
+    
+            <script type="text/javascript" src="/static/js/client/src/tbl.js"></script>
+            <script type="text/javascript">
+                var btn = document.getElementById('fetchButton');
+                google.maps.event.addDomListener(btn, 'click', initMap);
+            </script>
+    
+    
     </body>
 
     '''
