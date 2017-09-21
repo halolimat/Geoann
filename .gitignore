@@ -1,3 +1,7 @@
+brat_annotations/
+brat_annotations-1/
+Chennai/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
