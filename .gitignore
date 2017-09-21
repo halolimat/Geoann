@@ -1,5 +1,7 @@
 #ignore the annotations folder. Twitter data privacy concerns.
 brat_annotations/
+brat_annotations-1/
+Chennai/
 .idea/
 
 #ignore nohup
