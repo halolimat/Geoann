@@ -214,11 +214,7 @@ def html():
     </head>
     
     <script>
-        var tweets_urls = [{
-            {
-                tweet_urls_array | safe
-            }
-        }];
+        var tweets_urls = [{{tweet_urls_array | safe}}];
     
         function changeTweet(dir) {
             var currentSrc = "{{host|safe}}start?dataset={{div_city|safe}}_{{div_fldr|safe}}&tweet_id={{div_name|safe}}"
@@ -228,33 +224,38 @@ def html():
     
         document.onkeydown = function(e) {
             e = e || window.event;
-            if (e.keyCode == '37') {
-                //if flag is set commit data to file
-    
-                if (Eflag == 1) {
-                    $.getJSON('write', {
-                        wordlist: JSON.stringify(table)
-                    }, function(data) {
-                        //alert(data.result);
-                    });
-                }
-                changeTweet(-1); //left <- show Prev image
-            } else if (e.keyCode == '39') {
-                //if flag is set commit data to file
-    
-                if (Eflag == 1) {
-                    $.getJSON('write', {
-                        wordlist: JSON.stringify(table)
-                    }, function(data) {
-                        //alert(data.result);
-                    });
-                }
-    
-                // right -> show next image
-                changeTweet();
-            }
-    
-    
+
+	    try{
+
+		    if (e.keyCode == '37') {
+		        //if flag is set commit data to file
+	    
+		        if (Eflag == 1) {
+		            $.getJSON('write', {
+		                wordlist: JSON.stringify(table)
+		            }, function(data) {
+		                //alert(data.result);
+		            });
+		        }
+		        changeTweet(-1); //left <- show Prev image
+		    } else if (e.keyCode == '39') {
+		        //if flag is set commit data to file
+	    
+		        if (Eflag == 1) {
+		            $.getJSON('write', {
+		                wordlist: JSON.stringify(table)
+		            }, function(data) {
+		                //alert(data.result);
+		            });
+		        }
+	    
+		        // right -> show next image
+		        changeTweet();
+		    }
+	    }
+	    catch(e){
+		    location.reload();
+	    }
         }
     
         $(document).on("click", "#next", function() {
