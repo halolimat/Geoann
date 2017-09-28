@@ -1,5 +1,5 @@
 ################################################################################
-# Author: Hussein S. Al-Olimat      <hussein@knoesis.org>
+# Authors: Hussein S. Al-Olimat <halolimat>, Dipesh Kadariya <Dkadariya>
 # License: BSD 3 clause
 ################################################################################
 import googlemaps
@@ -8,9 +8,8 @@ import numpy as np
 from collections import defaultdict
 from flask import Flask, request, send_from_directory, render_template_string, render_template, jsonify
 import glob
-from file import remov
 import urllib2
-from radius import Ldist
+from math import radians, cos, sin, asin, sqrt
 ################################################################################
 ################################################################################
 tweet_id=''
@@ -25,6 +24,40 @@ def static_proxy(path):
 
 ################################################################################
 ################################################################################
+
+def Ldist(lon1, lat1, lon2, lat2):
+        """
+        Calculate the great circle distance between two points 
+        on the earth (specified in decimal degrees)
+        """
+        # convert decimal degrees to radians 
+        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+        # haversine formula 
+        dlon = lon2 - lon1 
+        dlat = lat2 - lat1 
+        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a)) 
+        km = 6367 * c
+        return km
+
+
+def remov(path,id):
+        f = open(path,"r")
+        lines = f.readlines()
+        f.close()
+        f = open(path,"w")
+        for line in lines:
+                l=line
+                l = l.replace("\n", "").split("\t")
+                if "G" not in l[0]:
+                        f.write(line)
+                elif id != l[1]:
+                        f.write(line)
+        f.close()
+
+#####################
+#####################
+
 @app.route('/location',methods = ['POST', 'GET'])
 def result():
     loc = request.args.get('a', 0, type=str)
