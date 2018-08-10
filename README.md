@@ -1,4 +1,4 @@
-<img src="http://knoesis.org/resources/images/hazardssees_logo_final.png" align="right" alt="Knoesis Depression Project Logo" width="170"/>
+<img src="http://knoesis.org/resources/images/hazardssees_logo_final.png" align="right" alt="" width="170"/>
 
 # Geoann
 
