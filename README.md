@@ -7,3 +7,12 @@ Geoann is an annotation tool for geocoding location names in texts. We use [Brat
 </br>
 
 ![GeoannGif](https://drive.google.com/uc?export=view&id=1trCxEvAayooGq6dd6tkwf-Lwpdhp2mX-)
+
+## Licenses ##
+
+This work is licensed under BSD-3-Clause and CreativesForGood licenses. A copy of the first license can be found in this repository. The other license can be found over this link [C4G License](https://github.com/halolimat/CreativesForGoodLicense).
+
+<p float="left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/BSD_wordmark.svg" alt="BSD-3-clause Logo" width="60" />
+  <img src="https://github.com/halolimat/CreativesForGoodLicense/raw/master/CreativesForGoodLogo2.png" alt="CreativesForGood Logo" width="120" style="margin-left: 10px;" /> 
+</p>
